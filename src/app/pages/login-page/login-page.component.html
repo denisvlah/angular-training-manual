@@ -1,0 +1,31 @@
+<form action="" class="login-form" 
+    [formGroup]="form"
+    (onSubmit)="onSubmit()"
+
+>
+    <h1>Login</h1>
+    <label class="tt-control-lable">
+        Telegram username
+        <input
+            formControlName="username"
+            id="username"
+            class="tt-control-input"
+            type="text" 
+            placeholder="telegram usernamne"  />
+
+    </label>
+    <label class="tt-control-lable">
+        Password
+        <input 
+            formControlName="password"
+            id="password"        
+            class="tt-control-input"
+            type="password"
+            placeholder="password"  />
+
+    </label>
+    <input type="submit" value="Sign in" />
+    <!-- <button class="btn btn-shadow" type="submit">Sign in</button> -->
+</form>
+
+<img src="/assets/images/logo.svg" alt="logo" />    
