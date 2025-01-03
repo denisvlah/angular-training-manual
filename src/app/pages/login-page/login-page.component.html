@@ -1,6 +1,8 @@
-<form action="" class="login-form" 
+<form  
+    action="#"
+    class="login-form" 
     [formGroup]="form"
-    (onSubmit)="onSubmit()"
+    (ngSubmit)="onSubmit()"
 
 >
     <h1>Login</h1>
@@ -17,15 +19,17 @@
     <label class="tt-control-lable">
         Password
         <input 
-            formControlName="password"
+            formControlName="username"            
             id="password"        
             class="tt-control-input"
             type="password"
             placeholder="password"  />
 
-    </label>
-    <input type="submit" value="Sign in" />
-    <!-- <button class="btn btn-shadow" type="submit">Sign in</button> -->
+    </label>   
+
+    <button class="btn btn-shadow" type="submit">Sign in</button>
 </form>
 
-<img src="/assets/images/logo.svg" alt="logo" />    
+<img src="/assets/images/logo.svg" alt="logo" />    josepereza/angular15-standalone-InjectionToken: angular 15 ...
+￼
+GitHub

@@ -1,26 +1,42 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AppAuthService } from '../../data/services/auth.service';
+import { Router } from '@angular/router';
+import { routes } from '../../app.routes';
+
+export interface LoginData{
+  username: string,
+  password: string
+}
+
+export type LoginDataForm = {
+  [field in keyof Partial<LoginData>]: FormControl<LoginData[field] | null>;
+};
 
 @Component({
   selector: 'app-login-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })
 export class LoginPageComponent {
-  form = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+  form = new FormGroup<LoginDataForm>({
+    username: new FormControl<string>('', [Validators.required, Validators.minLength(3)]),
+    password: new FormControl<string>('', [Validators.required, Validators.minLength(1)])
   });
 
-  onSubmit() {
-    if (this.form.invalid) {
-      console.log(this.form.value);    
-    } else {
-      console.log('form is invalid!!!');
-      console.log(this.form.errors);
-    }
-  }
-  
+  authService = inject(AppAuthService)
+  router = inject(Router);
+
+  onSubmit() {            
+    this.authService.login(
+      {
+        username: this.form.value.username!,
+        password: this.form.value.password!
+      }
+    )
+    .subscribe(r => this.router.navigate(['']));
+  } 
 
 }
