@@ -29,14 +29,18 @@ export class LoginPageComponent {
   authService = inject(AppAuthService)
   router = inject(Router);
 
-  onSubmit() {            
-    this.authService.login(
-      {
-        username: this.form.value.username!,
-        password: this.form.value.password!
-      }
-    )
-    .subscribe(r => this.router.navigate(['']));
+
+  onSubmit() {         
+    if (this.form.invalid){
+      this.authService.login(
+        {
+          username: this.form.value.username!,
+          password: this.form.value.password!
+        }
+      )
+      .subscribe(r => this.router.navigate(['']));      
+    }   
+    
   } 
 
 }

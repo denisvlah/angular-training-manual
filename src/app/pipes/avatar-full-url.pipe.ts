@@ -9,7 +9,7 @@ export class AvatarFullUrlPipe implements PipeTransform {
   transform(value: string | null | undefined, ...args: unknown[]): string | null {
     const basePath = environment.API_BASE_PATH
     if (value) {
-      return `${basePath}${value}`
+      return `${basePath}/${value}`
     }
     return value || null
   }

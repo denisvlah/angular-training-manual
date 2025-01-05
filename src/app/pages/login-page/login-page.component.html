@@ -1,13 +1,17 @@
-<form  
-    action="#"
+<form      
     class="login-form" 
     [formGroup]="form"
     (ngSubmit)="onSubmit()"
 
 >
     <h1>Login</h1>
-    <label class="tt-control-lable">
-        Telegram username
+    <label class="tt-control-lable">        
+        @if(form.get('username')?.invalid){
+            <span class="error">Telegram username*</span>
+        }
+        @else {
+            <span>Telegram username*</span>
+        }        
         <input
             formControlName="username"
             id="username"
@@ -16,10 +20,15 @@
             placeholder="telegram usernamne"  />
 
     </label>
-    <label class="tt-control-lable">
-        Password
+    <label class="tt-control-lable">        
+        @if(form.get('password')?.invalid){
+            <span class="error">Password*</span>
+        }
+        @else {
+            <span>Password*</span>
+        }
         <input 
-            formControlName="username"            
+            formControlName="password"            
             id="password"        
             class="tt-control-input"
             type="password"
@@ -30,6 +39,4 @@
     <button class="btn btn-shadow" type="submit">Sign in</button>
 </form>
 
-<img src="/assets/images/logo.svg" alt="logo" />    josepereza/angular15-standalone-InjectionToken: angular 15 ...
-￼
-GitHub
+<img src="/assets/images/logo.svg" alt="logo" />

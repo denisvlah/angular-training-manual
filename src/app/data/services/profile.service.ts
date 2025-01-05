@@ -12,7 +12,7 @@ export class ProfileService {
 
   getProfiles(): Observable<Profile[]> {
     const basePath = environment.API_BASE_PATH;
-    let url = `${basePath}/account/test-accounts`;
+    let url = `${basePath}/account/test_accounts`;
     return this.http.get<Profile[]>(url)
     //TODO: resolve how to properly configure generated http client
     // return this.accountClient.getTestAccountsAccountTestAccountsGet().pipe(map( (p: UserReadSchemaShort[]) =>{

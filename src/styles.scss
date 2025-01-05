@@ -57,7 +57,15 @@ h1 {
     cursor: pointer;
 }
 
+.btn-shadow:active {
+    box-shadow: 1px 1px 1px 0px #343336;
+}
+
 .btn-shadow {
     box-shadow: 4px 4px 2px 0px #5b4175;
 
+}
+
+.error {
+    color: red;
 }
