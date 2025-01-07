@@ -69,3 +69,24 @@ h1 {
 .error {
     color: red;
 }
+
+.password-container {
+    position: relative;
+}
+
+.password-eye-btn {
+    display: inline-block;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.password-eye-btn.active {
+    color: var(--primary-color);
+}
+
