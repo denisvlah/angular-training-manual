@@ -1,4 +1,8 @@
+@use '@angular/material' as mat;
 @import 'fonts';
+
+
+
 
 :root {
     --dark-color: #000000;
@@ -6,16 +10,22 @@
     --primary-color: #AE7AFF;
 }
 
-body {
+html {
+    color-scheme: dark;
+    @include mat.theme((
+      color: mat.$violet-palette,
+      typography: Roboto,
+      density: 0
+    ));
     font-family: 'JetBrains Mono', sans-serif;
     background: var(--dark-color);
     color: var(--light-color);
     background-image: url(/assets/images/background-image.png);
-}
+  }
 
 h1 {
     font-size: 35px;
-    font-weighfsdafat: 800;
+    font-weight: 800;
 }
 
 .tt-control-lable {
@@ -90,3 +100,12 @@ h1 {
     color: var(--primary-color);
 }
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.error-snackbar *  {    
+    background-color: rgb(49, 63, 88);
+    color: rgb(205, 88, 88);
+    font-size: 25px !important;      
+}
