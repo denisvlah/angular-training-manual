@@ -1,13 +1,19 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    <img src="/assets/images/logo.svg" class="side-bar-logo" />    
+    <mat-nav-list class="nav-list">
+      <a mat-list-item routerLink="/">
+        <mat-icon>home</mat-icon> Home
+      </a>
+      <a mat-list-item class="edit-my-profile" routerLink="edit-my-profile">
+        <mat-icon>
+          settings
+        </mat-icon>
+        edit my profile
+
+      </a>
+      
     </mat-nav-list>
-  </mat-sidenav>  
+  </mat-sidenav>
 </mat-sidenav-container>
