@@ -9,17 +9,14 @@ export const tokenInterceptor = (request: HttpRequest<any>, next: HttpHandlerFn)
     let authService = inject(AppAuthService);
     let token = authService.accesToken;
     
-    console.log(`can refresh token: ${request.context.get(REFRESH_TOKEN)}`);
 
     if (!token) {
         return next(request);
     }
-    
     return addTokenToReq(request, next, token)
         .pipe(
             catchError((err) => {
-                console.log(`can refresh token: ${request.context.get(REFRESH_TOKEN)}`);
-                if (err.status === 401 && request.context.get(REFRESH_TOKEN)) {
+                if ((err.status === 401 || err.status === 403) && request.context.get(REFRESH_TOKEN)) {
                     request.context.set(REFRESH_TOKEN, false);
                     return  authService.refreshAccessToken().pipe(
                         switchMap(r => {

@@ -35,7 +35,6 @@
   height: 100px;
 }
 
-.nav-listogo-small
 .edit-my-profile
 {
   position: relative;
@@ -44,8 +43,8 @@
 
 .nav-link-text
 {
-  display: inline-block;  
-  
+  display: inline-block;    
+  position: relative;
+  padding-left: 10px;
   bottom: 5px;
-  left: 5px;
 }
