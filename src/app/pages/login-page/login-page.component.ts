@@ -5,6 +5,7 @@ import { AppAuthService } from '../../data/services/auth.service';
 import { Router } from '@angular/router';
 import { routes } from '../../app.routes';
 import { environment } from '../../../environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface LoginData {
   username: string,
@@ -22,6 +23,7 @@ export type LoginDataForm = {
   styleUrl: './login-page.component.scss'
 })
 export class LoginPageComponent {
+  snackbar = inject(MatSnackBar);
   toglePasswordVisibility() {
     this.isPasswordVisible.set(!this.isPasswordVisible())
   }
@@ -40,6 +42,14 @@ export class LoginPageComponent {
     if (!isPord) {
       this.form.setValue({ username: 'denis_vlah', password: 'CdgMjunXMX' })
     }
+  }
+
+  isFormValid(){
+    return this.form.valid;
+  }
+
+  isUserNameValid(){
+    return this.form.get('username')?.valid;
   }
 
 
