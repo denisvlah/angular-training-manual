@@ -16,20 +16,16 @@ export const tokenInterceptor = (request: HttpRequest<any>, next: HttpHandlerFn)
     return addTokenToReq(request, next, token)
         .pipe(
             catchError((err) => {
-                console.log('trace1');
                 if ((err.status === 401 || err.status === 403) && request.context.get(REFRESH_TOKEN)) {
-                    console.log('trace2');
                     request.context.set(REFRESH_TOKEN, false);
                     return  authService.refreshAccessToken().pipe(
                         switchMap(r => {
-                            console.log('trace3');
                             return addTokenToReq(request, next, r.access_token);
                         })
                     );
                 }
-                console.log('trace3');
 
-                return throwError(err);
+                return throwError(()=>err);
             })
         );
 }
