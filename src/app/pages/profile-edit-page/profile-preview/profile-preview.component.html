@@ -1,1 +1,40 @@
-<p>profile-preview works!</p>
+<div class="profile-preview-header">
+    @if (profile.avatarUrl)
+    {
+        <img src="{{profile.avatarUrl | avatarFullUrl}}" alt="avatar"/>
+    }
+    @else 
+    {
+        <img src="/assets/images/EmptyAvatar.svg" alt="avatar"/>
+    }
+    
+    <div>
+        <h4>{{profile.firstName}} {{profile.lastName}}</h4>
+        <div>{{profile.username}}</div>
+    </div>
+</div>
+<hr/>
+<h4>Skills</h4>
+@if (profile.stack != null && profile.stack.length > 0)
+{
+    <mat-chip-set>
+        @for(skill of profile.stack; track skill)
+        {
+            <mat-chip>{{skill}}</mat-chip>
+        }
+    </mat-chip-set>
+}
+@else 
+{
+    <div class="missing-label">missing</div>
+}
+<h4>Description</h4>
+@if (profile.description)
+{
+    <p>{{profile.description}}</p>    
+}
+@else {
+    <div class="missing-label">missing</div>
+}
+
+

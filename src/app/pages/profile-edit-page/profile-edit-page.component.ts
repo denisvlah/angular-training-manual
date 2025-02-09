@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProfilePreviewComponent } from "./profile-preview/profile-preview.component";
 import { AccountService } from '../../data/services/rest';
 import { Profile } from '../../data/services/profile.service';
+import { ProfileEditComponent } from "./profile-edit/profile-edit.component";
 
 @Component({
   selector: 'app-profile-edit-page',
-  imports: [ProfilePreviewComponent],
+  imports: [ProfilePreviewComponent, ProfileEditComponent],
   templateUrl: './profile-edit-page.component.html',
   styleUrl: './profile-edit-page.component.scss'
 })
