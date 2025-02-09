@@ -1,9 +1,9 @@
-:host{
-  background: white;
+.sidenav-container {
+  height: 100%;  
 }
 
-.sidenav-container {
-  height: 100%;
+.sidenav-container * {
+  background: black;
 }
 
 .sidenav {

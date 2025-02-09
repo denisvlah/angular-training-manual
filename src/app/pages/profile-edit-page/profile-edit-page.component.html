@@ -1,12 +1,15 @@
 <div>
     @if (profile != null)
     {
-        <app-profile-preview [profile]="profile">
+        <mat-grid-list rows="1" cols="2">
+            <app-profile-preview [profile]="profile">
 
-        </app-profile-preview>
-        <app-profile-edit [profile]="profile">
-
-        </app-profile-edit>
+            </app-profile-preview>
+            <app-profile-edit [profile]="profile">
+            </app-profile-edit>
+        </mat-grid-list>
+        
+        
         
     }
     @else 

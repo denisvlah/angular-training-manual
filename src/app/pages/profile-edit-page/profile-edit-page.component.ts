@@ -3,10 +3,11 @@ import { ProfilePreviewComponent } from "./profile-preview/profile-preview.compo
 import { AccountService } from '../../data/services/rest';
 import { Profile } from '../../data/services/profile.service';
 import { ProfileEditComponent } from "./profile-edit/profile-edit.component";
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-profile-edit-page',
-  imports: [ProfilePreviewComponent, ProfileEditComponent],
+  imports: [ProfilePreviewComponent, ProfileEditComponent, MatGridListModule],
   templateUrl: './profile-edit-page.component.html',
   styleUrl: './profile-edit-page.component.scss'
 })
