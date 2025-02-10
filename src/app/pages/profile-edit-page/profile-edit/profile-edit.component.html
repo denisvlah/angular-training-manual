@@ -32,10 +32,12 @@
             <mat-label>Description username</mat-label>
             <textarea matInput formControlName="{{nameof('description')}}" >
             </textarea>            
-        </mat-form-field>       
-
-    
-        
+        </mat-form-field>
     </form>
+    <div>
+        <app-avatar-image [avatarUrl]="profile.avatarUrl">
+        </app-avatar-image>
+        
+    </div>
 </div>
 

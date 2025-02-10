@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "ngx-awesome-uploader": "^19.0.0",
     "ngx-cookie-service": "^19.0.0",
     "ngx-progressbar": "^14.0.0",
     "ngx-webstorage": "^19.0.1",

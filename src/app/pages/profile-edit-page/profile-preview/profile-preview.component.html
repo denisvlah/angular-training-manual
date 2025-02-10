@@ -1,12 +1,6 @@
 <div class="profile-preview-header">
-    @if (profile.avatarUrl)
-    {
-        <img src="{{profile.avatarUrl | avatarFullUrl}}" alt="avatar"/>
-    }
-    @else 
-    {
-        <img src="/assets/images/EmptyAvatar.svg" alt="avatar"/>
-    }
+    <app-avatar-image [avatarUrl]="profile.avatarUrl">        
+    </app-avatar-image>
     
     <div>
         <h4>{{profile.firstName}} {{profile.lastName}}</h4>

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Profile } from '../../../data/services/profile.service';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatToolbar } from '@angular/material/toolbar';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MaterialModule } from '../../../material.module';
+import { FilePickerModule } from  'ngx-awesome-uploader';
+import { AvatarImageComponent } from "../avatar-image/avatar-image.component";
 
 
 export type ProfileDataForm = {
@@ -12,7 +12,7 @@ export type ProfileDataForm = {
 
 @Component({
   selector: 'app-profile-edit',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  imports: [ReactiveFormsModule, FilePickerModule, MaterialModule, AvatarImageComponent],
   templateUrl: './profile-edit.component.html',
   styleUrl: './profile-edit.component.scss'
 })
