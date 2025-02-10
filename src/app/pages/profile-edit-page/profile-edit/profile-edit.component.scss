@@ -1,9 +1,12 @@
-:host * {
+:host {
     background: black;
+    padding-top:  20px;
+    min-height: 100%;
+    min-width: 100%;
+    display: block;
 }
 
 #profile-edit-container {
-    padding: 20px;
-    min-height: 100%;
+    
 }
 

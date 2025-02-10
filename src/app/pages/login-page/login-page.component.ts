@@ -3,7 +3,6 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppAuthService } from '../../data/services/auth.service';
 import { Router } from '@angular/router';
-import { routes } from '../../app.routes';
 import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
