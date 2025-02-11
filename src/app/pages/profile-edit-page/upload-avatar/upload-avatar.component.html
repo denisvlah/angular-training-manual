@@ -1,0 +1,35 @@
+@if (avatarPreview())
+{
+    <img class="avatar-image" [src]="avatarPreview()" alt="avatar"/>
+}
+@else {
+    <img class="avatar-image" src="/assets/images/EmptyAvatar.svg" alt="avatar"/>
+}
+
+
+<div class="dropzone"
+    tabindex="0"
+    (click)="fileDrop.click()"
+    (keyup.enter)="fileDrop.click()"
+    >
+    <div class="dropzone-content">
+        <mat-icon>
+            upload
+        </mat-icon>
+        <div>
+            Drag your avar image her or click and select it from files
+        </div>
+        <div>
+            (.png .jpg .svg)
+        </div>
+    </div>
+
+    <input 
+        tabindex="-1"
+        type="file" 
+        class="file-input" 
+        (change)="fileChanged($event)"
+        accept="image"
+        #fileDrop 
+        />
+</div>

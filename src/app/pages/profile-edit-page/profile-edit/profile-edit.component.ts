@@ -6,6 +6,7 @@ import { FilePickerModule } from 'ngx-awesome-uploader';
 import { AvatarImageComponent } from "../avatar-image/avatar-image.component";
 import { MatChipInputEvent } from '@angular/material/chips';
 import { AppAuthService } from '../../../data/services/auth.service';
+import { UploadAvatarComponent } from "../upload-avatar/upload-avatar.component";
 
 
 export type ProfileDataForm = {
@@ -14,7 +15,7 @@ export type ProfileDataForm = {
 
 @Component({
   selector: 'app-profile-edit',
-  imports: [ReactiveFormsModule, FilePickerModule, MaterialModule, AvatarImageComponent],
+  imports: [ReactiveFormsModule, FilePickerModule, MaterialModule, AvatarImageComponent, UploadAvatarComponent],
   templateUrl: './profile-edit.component.html',
   styleUrl: './profile-edit.component.scss'
 })
