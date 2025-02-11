@@ -2,15 +2,21 @@
 {
     <img class="avatar-image" [src]="avatarPreview()" alt="avatar"/>
 }
+@else if (originalAvatar)
+{
+    <img class="avatar-image" [src]="originalAvatar | avatarFullUrl" alt="avatar"/>
+}
 @else {
     <img class="avatar-image" src="/assets/images/EmptyAvatar.svg" alt="avatar"/>
 }
 
 
 <div class="dropzone"
+    appFileDnd
     tabindex="0"
     (click)="fileDrop.click()"
     (keyup.enter)="fileDrop.click()"
+    (onFileDroped)="handleFileDroped($event)"
     >
     <div class="dropzone-content">
         <mat-icon>
@@ -29,7 +35,7 @@
         type="file" 
         class="file-input" 
         (change)="fileChanged($event)"
-        accept="image"
+        accept="image/*"
         #fileDrop 
         />
 </div>

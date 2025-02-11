@@ -18,6 +18,12 @@
     border-color: var(--light-color);
 }
 
+.dropzone.fileOver {
+    border-width: 5px;
+    border-color: var(--primary-color);
+    border-style: solid;
+}
+
 .avatar-image {
     padding: 10px;
     width: 100px;

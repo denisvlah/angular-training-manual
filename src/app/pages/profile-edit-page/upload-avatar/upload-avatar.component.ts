@@ -1,14 +1,17 @@
-import { Component, signal } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
-import { environment } from '../../../../environments/environment';
+import { FileDndDirective } from '../file-dnd.directive';
+import { AvatarFullUrlPipe } from "../../../pipes/avatar-full-url.pipe";
 
 @Component({
   selector: 'app-upload-avatar',
-  imports: [MaterialModule],
+  imports: [MaterialModule, FileDndDirective, AvatarFullUrlPipe],
   templateUrl: './upload-avatar.component.html',
   styleUrl: './upload-avatar.component.scss'
 })
 export class UploadAvatarComponent {
+
+  @Input() originalAvatar: string | null = null;
 
   avatarPreview = signal<string | null>(null);
 
@@ -18,17 +21,22 @@ export class UploadAvatarComponent {
     if (fileList && fileList.length > 0)
     {
       let file = fileList[0];
-      let reader = new FileReader();
-      reader.onload = e=>{
-        this.avatarPreview.set(e.target?.result?.toString() ?? null);
-      };
-      reader.readAsDataURL(file);
+      this.processFile(file);
 
     }
     //TODO: continue here!  
+  }
 
+  private processFile(file: File) {
+    let reader = new FileReader();
+    reader.onload = e => {
+      this.avatarPreview.set(e.target?.result?.toString() ?? null);
+    };
+    reader.readAsDataURL(file);
+  }
 
-
+  handleFileDroped($event: File){
+    this.processFile($event);
   }
 
 }
