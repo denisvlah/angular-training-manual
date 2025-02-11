@@ -55,13 +55,15 @@
         <div class="profile-buttons">
             <button mat-icon-button
                     matTooltip="logout"     
-                    aria-label="logout"       
+                    aria-label="logout" 
+                    (click)="logout()"      
             >
                 <mat-icon>logout</mat-icon>
             </button>
             <button mat-icon-button
                     matTooltip="restore form"
                     aria-label="restore form"
+                    (click)="restoreForm()"
                     >
                 <mat-icon>restore</mat-icon>
             </button>

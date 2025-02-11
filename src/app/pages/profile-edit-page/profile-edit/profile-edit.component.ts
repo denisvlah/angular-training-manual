@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { Profile } from '../../../data/services/profile.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModule } from '../../../material.module';
 import { FilePickerModule } from 'ngx-awesome-uploader';
 import { AvatarImageComponent } from "../avatar-image/avatar-image.component";
 import { MatChipInputEvent } from '@angular/material/chips';
+import { AppAuthService } from '../../../data/services/auth.service';
 
 
 export type ProfileDataForm = {
@@ -18,8 +19,8 @@ export type ProfileDataForm = {
   styleUrl: './profile-edit.component.scss'
 })
 export class ProfileEditComponent implements OnInit {
-
-
+  
+  authService = inject(AppAuthService);
   $profileSkills = signal<string[]>([]);
   @Input() profile!: Profile;
 
@@ -74,10 +75,17 @@ export class ProfileEditComponent implements OnInit {
 
     // Add our keyword
     if (value) {
-      this.$profileSkills.update(keywords => [...keywords, value]);      
+      this.$profileSkills.update(keywords => [...keywords, value]);
     }
 
     // Clear the input value
     $event.chipInput!.clear();
+  }
+  restoreForm() {
+    this.form.setValue(this.profile);
+    this.$profileSkills.set(this.profile.stack ?? []);
+  }
+  logout() {
+    this.authService.logout();
   }
 }
