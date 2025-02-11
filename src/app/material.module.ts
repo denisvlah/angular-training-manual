@@ -5,6 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatListModule} from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
 // Add other Material imports as needed
 
 export const materialModules = [
@@ -12,7 +14,9 @@ export const materialModules = [
   MatFormFieldModule,
   MatInputModule,
   MatChipsModule,
-  MatListModule
+  MatListModule,
+  MatIconModule,
+  MatTooltipModule
   // Add other Material modules here
 ];
 

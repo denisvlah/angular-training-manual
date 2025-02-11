@@ -1,43 +1,75 @@
 <div id="profile-edit-container">
     <form [formGroup]="form" (ngSubmit)="submit()">
-        <div>
-            <mat-form-field>
+        <div class="profile-full-name">
+            <mat-form-field class="profile-input">
                 <mat-label>First name</mat-label>
                 <input matInput formControlName="firstName" />
                 @if (form.get(nameof('firstName'))?.dirty && form.get(nameof('firstName'))?.invalid)
                 {
-                    <mat-error>First name is required</mat-error>
-                }            
+                <mat-error>First name is required</mat-error>
+                }
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="profile-input">
                 <mat-label>Last name</mat-label>
                 <input matInput formControlName="{{nameof('lastName')}}" />
                 @if (form.get(nameof('lastName'))?.dirty && form.get(nameof('lastName'))?.invalid)
                 {
-                    <mat-error>Last name is required</mat-error>
-                }            
+                <mat-error>Last name is required</mat-error>
+                }
             </mat-form-field>
         </div>
 
-        <mat-form-field>
+        <mat-form-field class="profile-username profile-input">
             <mat-label>Telegram username</mat-label>
             <input matInput formControlName="{{nameof('username')}}" />
             @if (form.get(nameof('username'))?.dirty && form.get(nameof('username'))?.invalid)
             {
-                <mat-error>First name is required</mat-error>
-            }            
+            <mat-error>First name is required</mat-error>
+            }
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="profile-description profile-input">
             <mat-label>Description username</mat-label>
-            <textarea matInput formControlName="{{nameof('description')}}" >
-            </textarea>            
+            <textarea matInput formControlName="{{nameof('description')}}" rows="4">
+            </textarea>
         </mat-form-field>
+        <mat-form-field class="profile-input profile-stack">
+            <mat-label>Stack (skills)</mat-label>
+            <mat-chip-grid #reactiveChipGrid aria-label="Enter profile skills" formControlName="{{nameof('stack')}}">
+                @for (keyword of $profileSkills(); track keyword) {
+                <mat-chip-row (removed)="removeProfileSkill(keyword)">
+                    {{keyword}}
+                    <button matChipRemove aria-label="'remove skill' + keyword">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip-row>
+                }
+            </mat-chip-grid>
+            <input placeholder="Enter skill tags here..." [matChipInputFor]="reactiveChipGrid"
+                (matChipInputTokenEnd)="addProfileSkill($event)" />
+        </mat-form-field>
+        <div>
+            <app-avatar-image [avatarUrl]="profile.avatarUrl">
+            </app-avatar-image>
+        </div>
+        <div class="profile-buttons">
+            <button mat-icon-button
+                    matTooltip="logout"     
+                    aria-label="logout"       
+            >
+                <mat-icon>logout</mat-icon>
+            </button>
+            <button mat-icon-button
+                    matTooltip="restore form"
+                    aria-label="restore form"
+                    >
+                <mat-icon>restore</mat-icon>
+            </button>
+    
+            <button class="btn btn-shadow save-profile" type="submit">
+                Save
+            </button>
+        </div>
     </form>
-    <div>
-        <app-avatar-image [avatarUrl]="profile.avatarUrl">
-        </app-avatar-image>
-        
-    </div>
+    
 </div>
-
