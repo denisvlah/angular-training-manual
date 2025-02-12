@@ -1,9 +1,7 @@
-@if (avatarPreview())
-{
+@if (avatarPreview()) {
     <img class="avatar-image" [src]="avatarPreview()" alt="avatar"/>
 }
-@else if (originalAvatar)
-{
+@else if (originalAvatar) {
     <img class="avatar-image" [src]="originalAvatar | avatarFullUrl" alt="avatar"/>
 }
 @else {

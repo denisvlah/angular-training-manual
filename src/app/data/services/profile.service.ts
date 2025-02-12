@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, lastValueFrom, map, Observable, retry, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { AccountService, BASE_PATH } from './rest';
+import { AccountService, BASE_PATH, UserUpdateSchema } from './rest';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +41,7 @@ export class ProfileService {
     let uploadImage$: Observable<Object> | null = null;
     if (profileData.avatarFile) {
       let formData = new FormData();
-      formData.append("file", profileData.avatarFile);
+      formData.append("image", profileData.avatarFile);
       let url = `${this.basePath}/account/upload_image`;
       uploadImage$ = this.http.post(url, formData);      
     }
@@ -55,13 +55,13 @@ export class ProfileService {
       city: p.city
     });
 
-    this.combileUpdateProfile(uploadImage$, upldateAccount$);
+    this.combineUpdateProfile(uploadImage$, upldateAccount$);
   
   }
 
-  private async combileUpdateProfile(uploadImage$: Observable<Object> | null, upldateAccount$: Observable<import("./rest").UserReadSchema>) {
+  private async combineUpdateProfile(uploadImage$: Observable<Object> | null, upldateAccount$: Observable<import("./rest").UserReadSchema>) {
     if (uploadImage$ != null) {
-      await lastValueFrom(upldateAccount$);
+      await lastValueFrom(uploadImage$);
     }
     let p = await lastValueFrom(upldateAccount$);
 
@@ -89,8 +89,8 @@ export class ProfileService {
 }
 
 export type ProfileUpdateData = {
-  profile: Profile;
-  avatarFile: File | null;
+  profile: UserUpdateSchema;
+  avatarFile: File | null | undefined;
 }
 
 export type Profile = {

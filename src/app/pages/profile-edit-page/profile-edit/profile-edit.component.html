@@ -21,15 +21,11 @@
 
         <mat-form-field class="profile-username profile-input">
             <mat-label>Telegram username</mat-label>
-            <input matInput formControlName="{{nameof('username')}}" />
-            @if (form.get(nameof('username'))?.dirty && form.get(nameof('username'))?.invalid)
-            {
-            <mat-error>First name is required</mat-error>
-            }
+            <input matInput [value]="profile.username" readonly="true" />            
         </mat-form-field>
 
         <mat-form-field class="profile-description profile-input">
-            <mat-label>Description username</mat-label>
+            <mat-label>Description</mat-label>
             <textarea matInput formControlName="{{nameof('description')}}" rows="4">
             </textarea>
         </mat-form-field>
@@ -50,9 +46,8 @@
         </mat-form-field>
         <div>
             <app-upload-avatar 
-                [formControl]="uploadFormControl" 
-                [originalAvatar]="profile.avatarUrl">
-                
+                (fileSelected)="setFile($event)"                
+                [originalAvatar]="profile.avatarUrl">                
             </app-upload-avatar>
         </div>
         <div class="profile-buttons">

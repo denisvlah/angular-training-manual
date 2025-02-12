@@ -1,26 +1,28 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import { FileDndDirective } from '../file-dnd.directive';
 import { AvatarFullUrlPipe } from "../../../pipes/avatar-full-url.pipe";
-import { ControlValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'app-upload-avatar',
   imports: [MaterialModule, FileDndDirective, AvatarFullUrlPipe],
   templateUrl: './upload-avatar.component.html',
-  styleUrl: './upload-avatar.component.scss'
+  styleUrl: './upload-avatar.component.scss',  
 })
-export class UploadAvatarComponent implements ControlValueAccessor {
+export class UploadAvatarComponent {  
 
-  @Input()
-  originalAvatar: string | null | undefined = null;
+  @Input() originalAvatar: string | null | undefined = null;
+  @Output() fileSelected= new EventEmitter<File>();
+
+  getOriginalAvatar(){
+    console.log('accessing original avatar:');
+    console.log(this.originalAvatar);
+    return this.originalAvatar;
+  }
   
   avatarPreview = signal<string | null>(null);
-
-  reportFileChanged = (file: File) => { };
-  reportTouched = () => { };
   disabled = false;
-  touched = false;
+  
 
   fileChanged($event: Event) {
     let element = $event.currentTarget as HTMLInputElement;
@@ -28,48 +30,36 @@ export class UploadAvatarComponent implements ControlValueAccessor {
     if (fileList && fileList.length > 0) {
       let file = fileList[0];
       this.processFile(file);
-    }
-    //TODO: continue here!  
+    }   
   }
 
   private processFile(file: File) {
+    console.log('processFile');
     let reader = new FileReader();
     reader.onload = e => {
+      console.log('preview set');
       this.avatarPreview.set(e.target?.result?.toString() ?? null);
+      this.fileSelected.emit(file);
     };
     reader.readAsDataURL(file);
-    this.reportFileChanged(file);
-    this.fireTouched();
+    
+    //this.fireTouched();
   }
 
   handleFileDroped($event: File) {
     if (!this.disabled)
     {
       this.processFile($event);
-    }
-    
-  }
+    }    
+  }  
 
-  writeValue(obj: any): void {
-    this.originalAvatar = obj;    
-    this.avatarPreview.set(null);
-    this.touched = false;
-  }
-
-  registerOnChange(fn: any): void {
-    this.reportFileChanged = fn;
-  }
-  registerOnTouched(fn: any): void {
-    this.reportTouched = fn;
-  }
+  
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
-  }
+  }  
 
-  fireTouched() {
-    if (!this.touched) {
-      this.touched = true;
-      this.reportTouched();
-    }
+  ngOnInit(): void {
+    console.log('original avatar: ')
+    console.log(this.originalAvatar)
   }
 }
