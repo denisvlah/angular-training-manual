@@ -1,20 +1,24 @@
 <div>
-    @if (profile != null)
+    @if (profile != null && profile.firstName)
     {
-
-
         <div class="profile-edit-page">
             <div class="profile-preview">
                 <app-profile-preview [profile]="profile"></app-profile-preview>
             </div>
             <div class="profile-edit">
-                <app-profile-edit [profile]="profile"></app-profile-edit>
+                <app-profile-edit 
+                    [profile]="profile"
+                    (updateProfileEvent)="updateProfile($event)"
+                
+                >
+
+                </app-profile-edit>
             </div>           
         </div>
     }
     @else
     {
-    <div>Loading</div>
+        <div>Loading</div>
     }
 
 </div>

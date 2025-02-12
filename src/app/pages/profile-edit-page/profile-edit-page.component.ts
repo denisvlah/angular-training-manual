@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ProfilePreviewComponent } from "./profile-preview/profile-preview.component";
 import { AccountService } from '../../data/services/rest';
-import { Profile } from '../../data/services/profile.service';
+import { Profile, ProfileService, ProfileUpdateData } from '../../data/services/profile.service';
 import { ProfileEditComponent } from "./profile-edit/profile-edit.component";
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-edit-page',
@@ -11,18 +12,26 @@ import {MatGridListModule} from '@angular/material/grid-list';
   templateUrl: './profile-edit-page.component.html',
   styleUrl: './profile-edit-page.component.scss'
 })
-export class ProfileEditPageComponent implements OnInit {
-  
-  accountsService = inject(AccountService);
+export class ProfileEditPageComponent implements OnInit, OnDestroy {
+
+  profileService = inject(ProfileService);
   profile: Profile | null = null;
+  subscription: Subscription | null = null;
 
   ngOnInit(): void {
-    this.accountsService.getMeAccountMeGet()
-    .subscribe(p=>{
-      this.profile = p;
-    })
+    this.subscription = this.profileService.getMyProfile()
+      .subscribe(p => {
+        this.profile = p;
+      });
   }
 
-  
+  ngOnDestroy(): void {
+    if (this.subscription){
+      this.subscription.unsubscribe();
+    }
+  }
 
+  updateProfile($event: ProfileUpdateData) {
+    this.profileService.updateProfile($event);
+  }
 }

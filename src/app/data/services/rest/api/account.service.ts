@@ -764,7 +764,10 @@ export class AccountService implements AccountServiceInterface {
     public loadImageAccountUploadImagePost(image: Blob, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<UserReadSchema>;
     public loadImageAccountUploadImagePost(image: Blob, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UserReadSchema>>;
     public loadImageAccountUploadImagePost(image: Blob, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UserReadSchema>>;
-    public loadImageAccountUploadImagePost(image: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public loadImageAccountUploadImagePost(image: Blob, 
+        observe: any = 'body', 
+        reportProgress: boolean = false, 
+        options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (image === null || image === undefined) {
             throw new Error('Required parameter image was null or undefined when calling loadImageAccountUploadImagePost.');
         }

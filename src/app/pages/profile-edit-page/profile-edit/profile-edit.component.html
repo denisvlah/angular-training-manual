@@ -49,28 +49,24 @@
                 (matChipInputTokenEnd)="addProfileSkill($event)" />
         </mat-form-field>
         <div>
-            <app-upload-avatar></app-upload-avatar>
+            <app-upload-avatar 
+                [formControl]="uploadFormControl" 
+                [originalAvatar]="profile.avatarUrl">
+                
+            </app-upload-avatar>
         </div>
         <div class="profile-buttons">
-            <button mat-icon-button
-                    matTooltip="logout"     
-                    aria-label="logout" 
-                    (click)="logout()"      
-            >
+            <button mat-icon-button matTooltip="logout" aria-label="logout" (click)="logout()">
                 <mat-icon>logout</mat-icon>
             </button>
-            <button mat-icon-button
-                    matTooltip="restore form"
-                    aria-label="restore form"
-                    (click)="restoreForm()"
-                    >
+            <button mat-icon-button matTooltip="restore form" aria-label="restore form" (click)="restoreForm()">
                 <mat-icon>restore</mat-icon>
             </button>
-    
+
             <button class="btn btn-shadow save-profile" type="submit">
                 Save
             </button>
         </div>
     </form>
-    
+
 </div>

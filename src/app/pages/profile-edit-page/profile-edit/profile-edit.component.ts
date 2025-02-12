@@ -1,5 +1,5 @@
-import { Component, inject, Input, OnInit, signal } from '@angular/core';
-import { Profile } from '../../../data/services/profile.service';
+import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
+import { Profile, ProfileUpdateData } from '../../../data/services/profile.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModule } from '../../../material.module';
 import { FilePickerModule } from 'ngx-awesome-uploader';
@@ -15,15 +15,19 @@ export type ProfileDataForm = {
 
 @Component({
   selector: 'app-profile-edit',
-  imports: [ReactiveFormsModule, FilePickerModule, MaterialModule, AvatarImageComponent, UploadAvatarComponent],
+  imports: [ReactiveFormsModule, FilePickerModule, MaterialModule, UploadAvatarComponent],
   templateUrl: './profile-edit.component.html',
   styleUrl: './profile-edit.component.scss'
 })
 export class ProfileEditComponent implements OnInit {
+
+  @Input() profile!: Profile;  
+
+  @Output() updateProfileEvent = new EventEmitter<ProfileUpdateData>();
   
   authService = inject(AppAuthService);
   $profileSkills = signal<string[]>([]);
-  @Input() profile!: Profile;
+  
 
   form = new FormGroup<ProfileDataForm>({
     firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -38,13 +42,33 @@ export class ProfileEditComponent implements OnInit {
     subscribersAmount: new FormControl(),
   });
 
+  uploadFormControl = new FormControl<File | null>(null);
+
   ngOnInit(): void {
+    console.log('setting my profile:')
+    console.log(this.profile);
     this.form.setValue(this.profile);
     this.$profileSkills.set(this.profile.stack ?? []);
   }
 
   submit() {
-    console.log(this.form.value);
+    if (this.form.invalid)
+    {
+      return;
+    }
+
+    this.updateProfileEvent.emit({
+      avatarFile: this.uploadFormControl.value,
+      profile: {
+        id: this.form.value.id!,
+        username: this.form.value.username!,
+        firstName: this.form.value.firstName,
+        lastName: this.form.value.lastName,
+        description: this.form.value.description,
+        stack: this.form.value.stack
+      }
+    });
+    
   }
 
   isValid() {
