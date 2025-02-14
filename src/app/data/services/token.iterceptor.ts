@@ -1,9 +1,10 @@
 import { HttpContextToken, HttpEvent, HttpHandler, HttpHandlerFn, HttpRequest } from "@angular/common/http";
-import { catchError, map, Observable, of, switchMap, throwError } from "rxjs";
-import { AppAuthService, AuthResponse, REFRESH_TOKEN } from "./auth.service";
+import { BehaviorSubject, catchError, map,filter, Observable, of, switchMap, throwError, tap } from "rxjs";
+import { AppAuthService, AuthResponse} from "./auth.service";
 import { inject } from "@angular/core";
 
 
+const refreshingToken$ = new BehaviorSubject<boolean>(false);
 
 export const tokenInterceptor = (request: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
     let authService = inject(AppAuthService);
@@ -13,42 +14,56 @@ export const tokenInterceptor = (request: HttpRequest<any>, next: HttpHandlerFn)
     if (!token) {
         return next(request);
     }
-    return addTokenToReq(request, next, token)
+
+    return addTokenToReq(request, next, authService)
         .pipe(
             catchError((err) => {
-                if ((err.status === 401 || err.status === 403) && request.context.get(REFRESH_TOKEN)) {
-                    request.context.set(REFRESH_TOKEN, false);
-                    return  authService.refreshAccessToken().pipe(
+                if ((err.status === 401 || err.status === 403)) {
+                    refreshingToken$.next(true);
+                    return authService.refreshAccessToken().pipe(
                         catchError(e=>{
                             let a: AuthResponse = {
                                 access_token: '',
                                 refresh_token: '',
                                 token_type: ''
                             };
-                            console.log('invalid refresh token: ' + e);
+                            refreshingToken$.next(false)                            
                             authService.logout();
                             return of(a);
-                        })                       
-                        
-                    )
-                    .pipe(
+                        }),
+                        tap(r=>{
+                            refreshingToken$.next(false);
+                        }),
                         switchMap(r => {
-                            return addTokenToReq(request, next, r.access_token);
+                            return addTokenToReq(request, next, authService);
                         })
-                    )
-                    ;
+                        
+                    );
                 }
-
+                
                 return throwError(()=>err);
             })
         );
 }
 
-function addTokenToReq(request: HttpRequest<any>, next: HttpHandlerFn, token: string) {
-    let requestClone = request.clone({
-        setHeaders: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
-    return next(requestClone);
+function addTokenToReq(request: HttpRequest<any>, next: HttpHandlerFn, authService: AppAuthService) {
+
+    if (request.url.endsWith("/auth/refresh"))
+    {
+        return next(request);
+    }
+    
+    return refreshingToken$
+        .pipe(
+            filter(v=>v == false),
+            switchMap(v=>{
+                let requestClone = request.clone({
+                    setHeaders: {
+                        'Authorization': `Bearer ${authService.accesToken}`
+                    }
+                });
+                return next(requestClone);
+            })
+        )
+    
 }

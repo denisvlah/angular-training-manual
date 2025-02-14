@@ -14,9 +14,7 @@ export class UploadAvatarComponent {
   @Input() originalAvatar: string | null | undefined = null;
   @Output() fileSelected= new EventEmitter<File>();
 
-  getOriginalAvatar(){
-    console.log('accessing original avatar:');
-    console.log(this.originalAvatar);
+  getOriginalAvatar(){    
     return this.originalAvatar;
   }
   
@@ -33,11 +31,9 @@ export class UploadAvatarComponent {
     }   
   }
 
-  private processFile(file: File) {
-    console.log('processFile');
+  private processFile(file: File) {    
     let reader = new FileReader();
-    reader.onload = e => {
-      console.log('preview set');
+    reader.onload = e => {      
       this.avatarPreview.set(e.target?.result?.toString() ?? null);
       this.fileSelected.emit(file);
     };
@@ -59,7 +55,6 @@ export class UploadAvatarComponent {
   }  
 
   ngOnInit(): void {
-    console.log('original avatar: ')
-    console.log(this.originalAvatar)
+    
   }
 }

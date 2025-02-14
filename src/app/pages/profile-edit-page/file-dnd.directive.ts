@@ -35,10 +35,9 @@ export class FileDndDirective {
     $event.stopPropagation();
     this.fileOver = false;
     let files = $event.dataTransfer?.files;    
-    console.log('trace1')
+    
     if (files && files.length > 0)
-    {
-      console.log('trace2')
+    {    
       this.onFileDroped.emit(files[0]);
     }
   }

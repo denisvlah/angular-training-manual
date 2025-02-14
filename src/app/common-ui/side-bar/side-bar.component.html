@@ -3,19 +3,23 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <img src="/assets/images/logo.svg" class="side-bar-logo" />    
     <mat-nav-list class="nav-list">
-      <a mat-list-item routerLink="/">
+      <a mat-list-item routerLink="/" routerLinkActive="current-page">
         <mat-icon>home</mat-icon>
         <div class="nav-link-text">Home</div>
       </a>
-      <a mat-list-item routerLink="/chats">
+      <a mat-list-item routerLink="/chats" routerLinkActive="current-page">
         <mat-icon>chat</mat-icon>
         <div class="nav-link-text">Chats</div>
       </a>
-      <a mat-list-item routerLink="/profile-search">
+      <a mat-list-item routerLink="/profile-search" routerLinkActive="current-page">
         <mat-icon>search</mat-icon>
         <div class="nav-link-text">Profile search</div>
       </a>
-      <a mat-list-item class="edit-my-profile" routerLink="edit-my-profile">
+      <a mat-list-item 
+          class="edit-my-profile" 
+          routerLink="edit-my-profile"
+          routerLinkActive="current-page"
+          >
         <mat-icon>
           settings
         </mat-icon>

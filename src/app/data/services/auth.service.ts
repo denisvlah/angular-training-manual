@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'ngx-webstorage';
 
-export const REFRESH_TOKEN = new HttpContextToken<boolean>(() => true);
+
 
 @Injectable({
   providedIn: 'root'
@@ -54,15 +54,10 @@ export class AppAuthService {
   }
 
   refreshAccessToken(){
-    console.log('refreshAccessToken');
-
     let ulr = `${environment.API_BASE_PATH}/auth/refresh`;
     return this.http.post<AuthResponse>(ulr, 
     {
       refresh_token: this.refreshToken,
-    },
-    {
-      context: new HttpContext().set(REFRESH_TOKEN, false)
     })
     .pipe(
       tap(r => {
