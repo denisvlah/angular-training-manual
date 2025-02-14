@@ -61,9 +61,7 @@ export class LoginPageComponent {
         }
       )
         .subscribe(r => this.router.navigate(['']));
-    } else {
-      console.log('invalid form');
-    }
+    } 
 
   }
 

@@ -41,9 +41,7 @@ export class ProfileEditComponent implements OnInit {
   });
 
 
-  ngOnInit(): void {
-    console.log('setting my profile:')
-    console.log(this.profile);
+  ngOnInit(): void {    
     this.form.setValue({
       city: this.profile.city,
       description: this.profile.description,

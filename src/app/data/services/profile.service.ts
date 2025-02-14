@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom, map, Observable, retry, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { BehaviorSubject, firstValueFrom, lastValueFrom, map, Observable, retry, tap } from 'rxjs';
 import { AccountService, BASE_PATH, UserUpdateSchema } from './rest';
 
 @Injectable({
@@ -17,9 +16,7 @@ export class ProfileService {
   accountClient = inject(AccountService);
   basePath = inject(BASE_PATH);  
 
-
   getProfiles(): Observable<Profile[]> {
-    console.log(`basePath: ${this.basePath}`);    
     return this.accountClient.getTestAccountsAccountTestAccountsGet().pipe(map( p =>{
       return p.map(x=>x as Profile)
     }));    
@@ -61,9 +58,9 @@ export class ProfileService {
 
   private async combineUpdateProfile(uploadImage$: Observable<Object> | null, upldateAccount$: Observable<import("./rest").UserReadSchema>) {
     if (uploadImage$ != null) {
-      await lastValueFrom(uploadImage$);
+      await firstValueFrom(uploadImage$);
     }
-    let p = await lastValueFrom(upldateAccount$);
+    let p = await firstValueFrom(upldateAccount$);
 
     this.setProfile({
       id: p.id,
@@ -81,7 +78,7 @@ export class ProfileService {
   }
   
 
-  private setProfile(profile: Profile){
+  private setProfile(profile: Profile){    
     this.profileSubject.next(profile);
   }
 

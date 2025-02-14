@@ -10,7 +10,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { displayErrorinterceptor } from './data/services/displayError.interceptor';
 import { BASE_PATH } from './data/services/rest';
 import { environment } from '../environments/environment';
-import { MaterialModule } from './material.module';
 
 
 export const appConfig: ApplicationConfig = {

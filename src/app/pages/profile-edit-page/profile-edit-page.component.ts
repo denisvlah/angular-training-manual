@@ -20,7 +20,7 @@ export class ProfileEditPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.profileService.getMyProfile()
-      .subscribe(p => {
+      .subscribe(p => {        
         this.profile = p;
       });
   }
