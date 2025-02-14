@@ -2,3 +2,24 @@
     display: grid;
     gap: 20px;
 }
+.search-bar-container
+{
+    margin: 5px;
+    padding: 20px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--light-color);
+    display: flex;
+    gap: 15px;
+    background-color: black;
+}
+:host ::ng-deep .search-input {
+    .mat-mdc-text-field-wrapper {
+        background-color: black;
+    }
+
+    // Optional: If you want to style the focused state differently
+    .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
+        background-color: black;
+    }
+}

@@ -1,10 +1,43 @@
-<!-- <router-outlet /> -->
+<div class="search-bar-container">
+    <mat-form-field class="search-input">
+        <mat-label>user name</mat-label>
+        <input matInput [(ngModel)]="username" type="text" />
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="search-input">
+        <mat-label>registration date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="registrationDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="search-input">
+        <mat-label>city</mat-label>
+        <input matInput [(ngModel)]="city" type="text" />
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="search-input profile-stack">
+        <mat-label>stack</mat-label>
+        <mat-chip-grid #reactiveChipGrid aria-label="Enter profile skills">
+            @for (keyword of $profileSkills(); track keyword) {
+            <mat-chip-row (removed)="removeProfileSkill(keyword)">
+                {{keyword}}
+                <button matChipRemove aria-label="'remove skill' + keyword">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+            }
+        </mat-chip-grid>
+        <input placeholder="Enter skill tags here..." [matChipInputFor]="reactiveChipGrid"
+            (matChipInputTokenEnd)="addProfileSkill($event)" />
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+</div>
 <div class="profile-card-wrapper">
     @for(profile of profiles; track profile.id)
     {
-    <app-profile-card
-        [profile]="profile"
-    >
+    <app-profile-card [profile]="profile">
     </app-profile-card>
     }
 </div>

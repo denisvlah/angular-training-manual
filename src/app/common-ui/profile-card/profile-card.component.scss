@@ -6,6 +6,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr) 200px 1fr;
     grid-gap: 32px;
+    background-color: black;
 }   
 
 .avatar-name {
