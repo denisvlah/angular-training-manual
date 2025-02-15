@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, lastValueFrom, map, Observable, retry, tap } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, lastValueFrom, map, Observable, retry, switchMap, tap } from 'rxjs';
 import { AccountService, BASE_PATH, UserUpdateSchema } from './rest';
 
 @Injectable({
@@ -20,6 +20,21 @@ export class ProfileService {
     return this.accountClient.getTestAccountsAccountTestAccountsGet().pipe(map( p =>{
       return p.map(x=>x as Profile)
     }));    
+  }
+
+  searchProfiles(username?: string, city?: string, stack?: string[] | null): Observable<Profile[]> {
+    let stackStr = '';
+    if (stack) {
+      stackStr = stack.join(",");
+    }
+    stack?.join(",");
+    return this.accountClient.getAccountsAccountAccountsGet(stackStr, username, username, city, undefined, undefined, undefined)
+      .pipe(
+        map(p=> {
+          let x: Profile[] = p.items.map(x=>x as Profile);
+          return x;
+        })
+      );
   }
 
   getMyProfile(): Observable<Profile> {

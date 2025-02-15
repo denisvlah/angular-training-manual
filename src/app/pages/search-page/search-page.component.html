@@ -1,19 +1,19 @@
-<div class="search-bar-container">
+<form class="search-bar-container" [formGroup]="searchForm" >
     <mat-form-field class="search-input">
         <mat-label>user name</mat-label>
-        <input matInput [(ngModel)]="username" type="text" />
+        <input matInput  type="text" fprmControlName="username" />
         <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     <mat-form-field class="search-input">
         <mat-label>registration date</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="registrationDate">
+        <input matInput [matDatepicker]="picker" formControlName="registrationDate">
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="search-input">
         <mat-label>city</mat-label>
-        <input matInput [(ngModel)]="city" type="text" />
+        <input matInput formControlName="city" type="text" />
         <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
@@ -33,7 +33,7 @@
             (matChipInputTokenEnd)="addProfileSkill($event)" />
         <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
-</div>
+</form>
 <div class="profile-card-wrapper">
     @for(profile of profiles; track profile.id)
     {
