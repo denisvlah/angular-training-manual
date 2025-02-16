@@ -1,17 +1,22 @@
 <form class="search-bar-container" [formGroup]="searchForm" >
-    <mat-form-field class="search-input">
-        <mat-label>user name</mat-label>
-        <input matInput  type="text" fprmControlName="username" />
+    <mat-form-field class="search-input small-input">
+        <mat-label>first name</mat-label>
+        <input matInput  type="text" formControlName="firstName" />
         <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
-    <mat-form-field class="search-input">
-        <mat-label>registration date</mat-label>
+    <mat-form-field class="search-input small-input">
+        <mat-label>last name</mat-label>
+        <input matInput  type="text" formControlName="lastName" />
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <!-- <mat-form-field class="search-input">
+        <mat-label>registratisage with the SQLAlchemy Database Toolkit for Python.on date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="registrationDate">
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field class="search-input">
+    </mat-form-field> -->
+    <mat-form-field class="search-input small-input">
         <mat-label>city</mat-label>
         <input matInput formControlName="city" type="text" />
         <mat-icon matSuffix>search</mat-icon>
@@ -23,7 +28,7 @@
             @for (keyword of $profileSkills(); track keyword) {
             <mat-chip-row (removed)="removeProfileSkill(keyword)">
                 {{keyword}}
-                <button matChipRemove aria-label="'remove skill' + keyword">
+                    <button matChipRemove aria-label="'remove skill' + keyword">
                     <mat-icon>cancel</mat-icon>
                 </button>
             </mat-chip-row>
@@ -32,7 +37,7 @@
         <input placeholder="Enter skill tags here..." [matChipInputFor]="reactiveChipGrid"
             (matChipInputTokenEnd)="addProfileSkill($event)" />
         <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+    </mat-form-field>    
 </form>
 <div class="profile-card-wrapper">
     @for(profile of profiles; track profile.id)

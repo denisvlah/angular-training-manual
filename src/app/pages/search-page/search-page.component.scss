@@ -4,15 +4,32 @@
 }
 .search-bar-container
 {
-    margin: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 10px;
+    margin-bottom: 30px;    
     padding: 20px;
     border-style: solid;
     border-width: 1px;
     border-color: var(--light-color);
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 15px;
     background-color: black;
 }
+
+.small-input {    
+    width: 200px;
+    align-self: flex-start;    
+}
+
+.search-input.profile-stack {    
+    min-width: 250px;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
 :host ::ng-deep .search-input {
     .mat-mdc-text-field-wrapper {
         background-color: black;

@@ -22,13 +22,13 @@ export class ProfileService {
     }));    
   }
 
-  searchProfiles(username?: string, city?: string, stack?: string[] | null): Observable<Profile[]> {
+  searchProfiles(firstName?: string, lastName?: string, city?: string, stack?: string[] | null): Observable<Profile[]> {
     let stackStr = '';
     if (stack) {
       stackStr = stack.join(",");
     }
     stack?.join(",");
-    return this.accountClient.getAccountsAccountAccountsGet(stackStr, username, username, city, undefined, undefined, undefined)
+    return this.accountClient.getAccountsAccountAccountsGet(stackStr, firstName, lastName, city, undefined, undefined, undefined)
       .pipe(
         map(p=> {
           let x: Profile[] = p.items.map(x=>x as Profile);

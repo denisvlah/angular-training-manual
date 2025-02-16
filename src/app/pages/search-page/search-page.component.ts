@@ -2,18 +2,19 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ProfileCardComponent } from '../../common-ui/profile-card/profile-card.component';
 import { Profile, ProfileService } from '../../data/services/profile.service';
 import { MaterialModule } from '../../material.module';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { debounceTime, filter } from 'rxjs';
+import { debounceTime } from 'rxjs';
+
 
 interface ISearchForm
 {
-  username: FormControl<string | null>;  
+  firstName: FormControl<string | null>;  
+  lastName: FormControl<string | null>;  
   city: FormControl<string | null>;
   stack: FormControl<string[] | null>;
-
 }
 
 @Component({
@@ -34,22 +35,23 @@ export class SearchPageComponent  {
 
 
   constructor() {
-    this.profileService.getProfiles().subscribe((profiles) => {
+    this.profileService.searchProfiles().subscribe((profiles) => {
       this.profiles = profiles;
     });
+
     this.searchForm = this.fb.group<ISearchForm>({
-      username: new FormControl<string | null>(null),      
+      firstName: new FormControl<string | null>(null),      
+      lastName: new FormControl<string | null>(null),
       city: new FormControl<string | null>(null),
       stack: new FormControl<string[] | null>(null),
     });
     
     this.searchForm.valueChanges.pipe(
-      debounceTime(500),      
-      
+      debounceTime(500),            
     )
     .subscribe((value) => {
       const data = this.searchForm.value;
-      this.profileService.searchProfiles(data.username!, data.city!, data.stack).subscribe((profiles) => {
+      this.profileService.searchProfiles(data.firstName!, data.lastName!, data.city!, data.stack).subscribe((profiles) => {
         this.profiles = profiles;
       });
     });
