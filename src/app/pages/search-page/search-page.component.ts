@@ -10,6 +10,8 @@ import { Profile, ProfileService } from '../../data/services/profile.service';
   styleUrl: './search-page.component.scss'
 })
 export class SearchPageComponent {
+
+  public static readonly PATH = 'search-profiles'
   profileService = inject(ProfileService);
   profiles: Profile[] = [];
 

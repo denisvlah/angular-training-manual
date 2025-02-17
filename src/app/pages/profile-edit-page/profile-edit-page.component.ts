@@ -14,6 +14,8 @@ import { Subscription } from 'rxjs';
 })
 export class ProfileEditPageComponent implements OnInit, OnDestroy {
 
+  public static readonly PATH = 'edit-my-profile';
+
   profileService = inject(ProfileService);
   profile: Profile | null = null;
   subscription: Subscription | null = null;
