@@ -7,6 +7,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatListModule} from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatToolbar } from '@angular/material/toolbar';
 // Add other Material imports as needed
 
 export const materialModules = [
@@ -16,7 +17,8 @@ export const materialModules = [
   MatChipsModule,
   MatListModule,
   MatIconModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatToolbar,
   // Add other Material modules here
 ];
 
