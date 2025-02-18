@@ -1,0 +1,27 @@
+.make-post-input {    
+    border: 1px dotted var(--light-color);
+    border-radius: 1%;
+    background-color: black;
+    padding: 10px;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.post-field
+{
+    width: 100%;
+}
+
+:host ::ng-deep .post-field {
+    .mat-mdc-text-field-wrapper {
+        background-color: black;
+    }
+
+    // Optional: If you want to style the focused state differently
+    .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
+        background-color: black;
+    }
+}

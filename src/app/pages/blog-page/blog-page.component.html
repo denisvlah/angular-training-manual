@@ -1,1 +1,21 @@
+<div class="make-post-input">
+    <form [formGroup]="form">
+        <mat-form-field class="post-field">
+            <mat-label>post something</mat-label>
+            <input matInput formControlName="postText"  />
+            @if (!postTextInvalid())
+            {
+                <mat-error>
+                    Min post length is 3 symbols
+                </mat-error>                
+            }
+            
+            <button mat-mini-fab matSuffix type="submit" [disabled]="!canSend()">
+                <mat-icon>
+                    send
+                </mat-icon>
+            </button>
+        </mat-form-field>        
+    </form>
+</div>
 <app-post></app-post>
