@@ -1,5 +1,5 @@
 <div class="make-post-input">
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="sendPost()">
         <mat-form-field class="post-field">
             <mat-label>post something</mat-label>
             <input matInput formControlName="postText"  />
