@@ -13,6 +13,7 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './blog-page.component.scss'
 })
 export class BlogPageComponent implements OnInit {
+  
   posts: ApplicationPostSchemasPostReadSchema[] = [];
   ngOnInit(): void {
     this.postService.getPostsPostGet()
@@ -42,7 +43,7 @@ export class BlogPageComponent implements OnInit {
         .subscribe(p => {
           this.posts.unshift(p);
           this.form.reset();
-    });
+        });
     }
   }
 
@@ -50,7 +51,9 @@ export class BlogPageComponent implements OnInit {
     return this.form.touched && this.form.value.postText && this.form.value.postText.length < 3
   }
 
-
-
-
+  removePost($event: number) {
+    if (this.posts) {
+      this.posts = this.posts.filter(x => x.id !== $event)
+    }
+  }
 }

@@ -19,6 +19,6 @@
     </form>
 </div>
 @for(post of posts; track post.id) {
-    <app-post [post]="post"></app-post>    
+    <app-post [post]="post" (postDeleted)="removePost($event)" ></app-post>    
 }
 

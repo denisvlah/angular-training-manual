@@ -9,9 +9,17 @@
                         <span class="font-medium">{{post.author.firstName}} {{post.author.lastName}}</span>
                         <span class="text-gray-400 text-sm">{{post.createdAt}}</span>
                     </div>
-                    <button mat-icon-button>
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
+                    @if (canEditPost)
+                    {
+                        <button mat-icon-button [matMenuTriggerFor]="postMenu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #postMenu="matMenu">
+                            <button mat-menu-item>edit post</button>
+                            <button mat-menu-item (click)="removePost()" >remove post</button>
+                        </mat-menu>
+                    }
+                    
                 </div>
                 <p class="mt-2 text-xl">
                     {{post.title}}
@@ -22,7 +30,11 @@
                         <span>{{post.comments?.length ?? 0}}</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <mat-icon>favorite</mat-icon>
+                        <form (ngSubmit)="likePost()" [formGroup]="likesForm">
+                            <button type="submit">
+                                <mat-icon>favorite</mat-icon>
+                            </button>
+                        </form>
                         <span>{{post.likes}}</span>
                     </div>
                 </div>
@@ -32,7 +44,8 @@
             @for(comment of post.comments; track comment.id)
             {
             <div class="flex items-start gap-3">
-                @let commenterAvatarUrl = (comment.author.avatarUrl | avatarFullUrl) ?? '/assets/images/EmptyAvatar.svg';
+                @let commenterAvatarUrl = (comment.author.avatarUrl | avatarFullUrl) ??
+                '/assets/images/EmptyAvatar.svg';
                 <img src="{{commenterAvatarUrl}}" class="rounded-full w-8 h-8 object-cover" />
                 <div class="flex-1">
                     <div class="flex items-center justify-between">
@@ -49,12 +62,10 @@
             }
 
         </div>
-        <form [formGroup] = "form" (ngSubmit)="sendComment()">
+        <form [formGroup]="form" (ngSubmit)="sendComment()">
             <div class="flex items-center gap-3 mt-6 border border-dashed border-gray-700 rounded-lg p-3">
                 <img src="{{authorUrl}}" class="rounded-full w-8 h-8 object-cover" />
-                <input type="text" 
-                    formControlName="commentText"
-                    placeholder="write your comment" 
+                <input type="text" formControlName="commentText" placeholder="write your comment"
                     class="bg-transparent flex-1 outline-none" />
 
                 <div class="flex items-center gap-2">
