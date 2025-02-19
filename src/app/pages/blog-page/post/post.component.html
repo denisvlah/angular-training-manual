@@ -1,8 +1,7 @@
 <div id="webcrumbs">
     <div class="bg-black text-white p-6 rounded-lg font-sans">
-        <div class="flex items-start gap-3 mb-4">
-            @let authorUrl = (post.author.avatarUrl | avatarFullUrl) ?? '/assets/images/EmptyAvatar.svg';
-            <img src="{{authorUrl}}" class="rounded-full w-10 h-10 object-cover" />
+        <div class="flex items-start gap-3 mb-4">            
+            <img src="{{post.author.avatarUrl | avatarFullUrl }}" class="small-avatar" />
             <div class="flex-1">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
@@ -37,6 +36,7 @@
                             (keyup.esc)="cancellEditPost()"
                             (blur)="cancellEditPost()"
                             />
+                        <img matIconPrefix src="{{post.author.avatarUrl | avatarFullUrl}}" class="small-avatar" />
                         <button mat-icon-button matIconSuffix (click)="updatePost()">
                             <mat-icon>
                                 save
@@ -69,10 +69,8 @@
         <div class="pl-4 ml-12 space-y-4 overflow-y-auto comments-container">
             @for(comment of post.comments; track comment.id)
             {
-            <div class="flex items-start gap-3">
-                @let commenterAvatarUrl = (comment.author.avatarUrl | avatarFullUrl) ??
-                '/assets/images/EmptyAvatar.svg';
-                <img src="{{commenterAvatarUrl}}" class="rounded-full w-8 h-8 object-cover" />
+            <div class="flex items-start gap-3">               
+                <img src="{{comment.author.avatarUrl | avatarFullUrl}}" class="small-avatar" />
                 <div class="flex-1">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
@@ -90,7 +88,7 @@
         </div>
         <form [formGroup]="form" (ngSubmit)="sendComment()">
             <div class="flex items-center gap-3 mt-6 border border-dashed border-gray-700 rounded-lg p-3">
-                <img src="{{authorUrl}}" class="rounded-full w-8 h-8 object-cover" />
+                <img src="{{post.author.avatarUrl | avatarFullUrl}}" class="small-avatar" />
                 <input type="text" formControlName="commentText" placeholder="write your comment"
                     class="bg-transparent flex-1 outline-none" />
 

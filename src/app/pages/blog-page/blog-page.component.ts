@@ -5,19 +5,30 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { AccountService, ApplicationPostSchemasPostReadSchema, PostService } from '../../data/services/rest';
 import { AsyncPipe } from '@angular/common';
+import { Profile, ProfileService } from '../../data/services/profile.service';
+import { Subscription } from 'rxjs';
+import { AvatarFullUrlPipe } from "../../pipes/avatar-full-url.pipe";
 
 @Component({
   selector: 'app-blog-page',
-  imports: [PostComponent, MaterialModule, ReactiveFormsModule, MatButtonModule, AsyncPipe],
+  imports: [PostComponent, MaterialModule, ReactiveFormsModule, MatButtonModule, AsyncPipe, AvatarFullUrlPipe],
   templateUrl: './blog-page.component.html',
   styleUrl: './blog-page.component.scss'
 })
 export class BlogPageComponent implements OnInit {
-  
+  profileService = inject(ProfileService);
   posts: ApplicationPostSchemasPostReadSchema[] = [];
+  me: Profile | null = null;
+  subscription: Subscription | null = null;
   ngOnInit(): void {
     this.postService.getPostsPostGet()
       .subscribe(p => this.posts = p);
+
+    this.subscription = this.profileService.getMyProfile()
+      .subscribe(p => {
+        this.me = p;
+        this.subscription?.unsubscribe();
+      });
 
   }
 
@@ -25,7 +36,6 @@ export class BlogPageComponent implements OnInit {
 
   fb = inject(FormBuilder);
   postService = inject(PostService);
-  accountService = inject(AccountService);
 
   form = this.fb.group({
     postText: ['', Validators.minLength(3)]

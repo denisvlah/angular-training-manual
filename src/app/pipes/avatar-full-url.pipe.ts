@@ -11,7 +11,7 @@ export class AvatarFullUrlPipe implements PipeTransform {
     if (value) {
       return `${basePath}/${value}`
     }
-    return value || null
+    return value || '/assets/images/EmptyAvatar.svg'
   }
 
 }

@@ -1,12 +1,11 @@
-import { Component, ContentChild, ElementRef, EventEmitter, inject, Input, OnDestroy, OnInit, Output, viewChild, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, OnInit, Output, viewChild } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
-import { AccountService, ApplicationPostSchemasPostReadSchema, CommentService, PostService } from '../../../data/services/rest';
+import { ApplicationPostSchemasPostReadSchema, CommentService, PostService } from '../../../data/services/rest';
 import { AvatarFullUrlPipe } from "../../../pipes/avatar-full-url.pipe";
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProfileService } from '../../../data/services/profile.service';
 import { Subscription } from 'rxjs';
-import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-post',
@@ -99,6 +98,7 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.editPostcontrol.setValue(this.post.title);
     this.myProfileDescription = this.profileService.getMyProfile().subscribe(p => {
       this.canEditPost = p.id === this.post.author.id;
       this.myProfileDescription?.unsubscribe();

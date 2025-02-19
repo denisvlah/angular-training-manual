@@ -12,16 +12,14 @@
 
 html {
     color-scheme: dark;
-    @include mat.theme((
-      color: mat.$violet-palette,
-      typography: Roboto,
-      density: 0
-    ));
+    @include mat.theme((color: mat.$violet-palette,
+            typography: Roboto,
+            density: 0));
     font-family: 'JetBrains Mono', sans-serif;
     background: var(--dark-color);
     color: var(--light-color);
     background-image: url(/assets/images/background-image.png);
-  }
+}
 
 h1 {
     font-size: 35px;
@@ -101,12 +99,28 @@ h1 {
 }
 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-.error-snackbar *  {    
-    background-color: rgb(49, 63, 88);
-    color: rgb(205, 88, 88);
-    font-size: 25px !important;      
+html,
+body {
+    height: 100%;
 }
 
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.error-snackbar * {
+    background-color: rgb(49, 63, 88);
+    color: rgb(205, 88, 88);
+    font-size: 25px !important;
+}
+
+@mixin avatar-circle {
+    @apply rounded-full w-10 h-10;
+}
+
+// Usage:
+.small-avatar {
+    @include avatar-circle;
+    margin-right: 10px;
+}

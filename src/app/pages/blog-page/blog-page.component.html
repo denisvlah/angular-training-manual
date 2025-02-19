@@ -3,6 +3,8 @@
         <mat-form-field class="post-field">
             <mat-label>post something</mat-label>
             <input matInput formControlName="postText"  autofocus/>
+            <img matIconPrefix src="{{me?.avatarUrl | avatarFullUrl}}" class="small-avatar" />
+            
             @if (!postTextInvalid())
             {
                 <mat-error>
