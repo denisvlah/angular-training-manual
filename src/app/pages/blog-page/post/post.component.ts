@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, ContentChild, ElementRef, EventEmitter, inject, Input, OnDestroy, OnInit, Output, viewChild, ViewChild } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import { AccountService, ApplicationPostSchemasPostReadSchema, CommentService, PostService } from '../../../data/services/rest';
 import { AvatarFullUrlPipe } from "../../../pipes/avatar-full-url.pipe";
@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { MatMenuModule } from '@angular/material/menu';
 import { ProfileService } from '../../../data/services/profile.service';
 import { Subscription } from 'rxjs';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-post',
@@ -13,19 +14,27 @@ import { Subscription } from 'rxjs';
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit {  
+
+  editPostElement = viewChild<ElementRef<HTMLButtonElement>>('editPostElement')
+
   startEditPost() {
     this.postEditMode = true;
+
+    setTimeout(() => {
+      this.editPostElement()?.nativeElement.focus();
+    }, 300);
+
   }
   updatePost() {
     this.postService.updatePostPostPostIdPatch(this.post.id, {
       title: this.editPostcontrol.value,
       content: this.post.content
     })
-    .subscribe(x=>{
-      this.post.title = x.title;
-      this.cancellEditPost();
-    })
+      .subscribe(x => {
+        this.post.title = x.title;
+        this.cancellEditPost();
+      })
   }
   cancellEditPost() {
     this.postEditMode = false;

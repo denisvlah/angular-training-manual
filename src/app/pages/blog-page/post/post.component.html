@@ -29,9 +29,14 @@
                 }
                 @else 
                 {
-                    <mat-form-field>
+                    <mat-form-field class="edit-post-controll">
                         <mat-label>edit post</mat-label>
-                        <input type="text" matInput [formControl]="editPostcontrol"/>
+                        <input #editPostElement type="text" matInput 
+                            [formControl]="editPostcontrol"
+                            (keyup.enter)="updatePost()"
+                            (keyup.esc)="cancellEditPost()"
+                            (blur)="cancellEditPost()"
+                            />
                         <button mat-icon-button matIconSuffix (click)="updatePost()">
                             <mat-icon>
                                 save

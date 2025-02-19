@@ -2,7 +2,7 @@
     <form [formGroup]="form" (ngSubmit)="sendPost()">
         <mat-form-field class="post-field">
             <mat-label>post something</mat-label>
-            <input matInput formControlName="postText"  />
+            <input matInput formControlName="postText"  autofocus/>
             @if (!postTextInvalid())
             {
                 <mat-error>
