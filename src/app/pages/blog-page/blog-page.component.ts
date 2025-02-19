@@ -39,7 +39,10 @@ export class BlogPageComponent implements OnInit {
       this.postService.createPostPostPost({
         title: this.form.value.postText!,
       })
-        .subscribe(p => this.posts.unshift(p));
+        .subscribe(p => {
+          this.posts.unshift(p);
+          this.form.reset();
+    });
     }
   }
 
