@@ -15,15 +15,36 @@
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #postMenu="matMenu">
-                            <button mat-menu-item>edit post</button>
+                            <button mat-menu-item (click)="startEditPost()" >edit post</button>
                             <button mat-menu-item (click)="removePost()" >remove post</button>
                         </mat-menu>
                     }
                     
                 </div>
-                <p class="mt-2 text-xl">
-                    {{post.title}}
-                </p>
+                @if(!postEditMode)
+                {
+                    <p class="mt-2 text-xl">
+                        {{post.title}}
+                    </p>
+                }
+                @else 
+                {
+                    <mat-form-field>
+                        <mat-label>edit post</mat-label>
+                        <input type="text" matInput [formControl]="editPostcontrol"/>
+                        <button mat-icon-button matIconSuffix (click)="updatePost()">
+                            <mat-icon>
+                                save
+                            </mat-icon>
+                        </button>
+                        <button mat-icon-button matIconSuffix (click)="cancellEditPost()">
+                            <mat-icon>
+                                cancel
+                            </mat-icon>
+                        </button>
+                    </mat-form-field>
+                }
+                
                 <div class="flex items-center gap-4 mt-3">
                     <div class="flex items-center gap-2">
                         <mat-icon>comment</mat-icon>

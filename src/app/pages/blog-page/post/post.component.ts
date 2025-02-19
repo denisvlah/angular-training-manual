@@ -2,7 +2,7 @@ import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } fro
 import { MaterialModule } from '../../../material.module';
 import { AccountService, ApplicationPostSchemasPostReadSchema, CommentService, PostService } from '../../../data/services/rest';
 import { AvatarFullUrlPipe } from "../../../pipes/avatar-full-url.pipe";
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProfileService } from '../../../data/services/profile.service';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,25 @@ import { Subscription } from 'rxjs';
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
-export class PostComponent implements OnInit {  
+export class PostComponent implements OnInit {
+  startEditPost() {
+    this.postEditMode = true;
+  }
+  updatePost() {
+    this.postService.updatePostPostPostIdPatch(this.post.id, {
+      title: this.editPostcontrol.value,
+      content: this.post.content
+    })
+    .subscribe(x=>{
+      this.post.title = x.title;
+      this.cancellEditPost();
+    })
+  }
+  cancellEditPost() {
+    this.postEditMode = false;
+    this.editPostcontrol.reset();
+    this.editPostcontrol.setValue(this.post.title);
+  }
 
   @Input() post!: ApplicationPostSchemasPostReadSchema;
 
@@ -34,6 +52,9 @@ export class PostComponent implements OnInit {
 
   });
   canEditPost = false;
+
+  postEditMode = false;
+  editPostcontrol = new FormControl<string>('');
 
   sendComment() {
     if (this.form.valid) {
@@ -62,17 +83,15 @@ export class PostComponent implements OnInit {
   }
 
   removePost() {
-    console.log('log1');
     this.postService.deletePostPostPostIdDelete(this.post.id)
       .subscribe(x => {
         this.postDeleted.emit(this.post.id);
-        console.log('log2');
-    });
+      });
   }
 
   ngOnInit(): void {
-    this.myProfileDescription = this.profileService.getMyProfile().subscribe(p=>{
-      this.canEditPost = p.id == this.post.author.id;
+    this.myProfileDescription = this.profileService.getMyProfile().subscribe(p => {
+      this.canEditPost = p.id === this.post.author.id;
       this.myProfileDescription?.unsubscribe();
     })
   }

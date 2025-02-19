@@ -53,7 +53,7 @@ export class BlogPageComponent implements OnInit {
 
   removePost($event: number) {
     if (this.posts) {
-      this.posts = this.posts.filter(x => x.id !== $event)
+      this.posts = this.posts.filter(x => x.id !== $event);      
     }
   }
 }
