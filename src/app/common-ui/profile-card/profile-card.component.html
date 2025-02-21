@@ -30,11 +30,20 @@
         }
         @else
         {
-            <button>View profile</button>
-            <button class="btn btn-shadow" (click)="unsubscribe()">
-                Unsubscribe
-            </button>
             <button class="btn btn-shadow">Send message</button>
+            <button mat-icon-button 
+                    matTooltip="unsubscribe from this person"
+                    (click)="unsubscribe()">
+                <mat-icon>unsubscribe
+                </mat-icon>                
+            </button>
+            <button mat-icon-button matTooltip="view profile">
+                <mat-icon>
+                    open_in_new
+                </mat-icon>
+            </button>
+            
+            
         }
         
     </div>

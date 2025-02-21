@@ -5,16 +5,17 @@ import { ProfilesDict, SubscriptionsService } from '../../data/services/subscrip
 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
+import { MaterialModule } from '../../material.module';
 
 @Component({
   selector: 'app-profile-card',
-  imports: [AvatarFullUrlPipe, NgClass],
+  imports: [AvatarFullUrlPipe, NgClass, MaterialModule],
   templateUrl: './profile-card.component.html',
   styleUrl: './profile-card.component.scss'
 })
 export class ProfileCardComponent {
-  isSearchStackItem(skill: string) {
-    let index = this.searchStack.indexOf(skill);
+  isSearchStackItem(skill: string) {    
+    let index = this.searchStack.indexOf(skill.trim());
     return index != -1;
   }
 
