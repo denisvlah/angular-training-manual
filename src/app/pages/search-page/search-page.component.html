@@ -43,7 +43,7 @@
     <div class="profile-card-wrapper">
         @for(profile of profiles; track profile.id)
         {
-        <app-profile-card [profile]="profile">
+        <app-profile-card [profile]="profile" [searchStack]="$profileSkills()">
         </app-profile-card>
         }
     </div>
