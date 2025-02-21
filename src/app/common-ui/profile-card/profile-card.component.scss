@@ -61,3 +61,22 @@
     padding: 10px 20px;
     
 }
+
+.search-stack-item
+{
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.profile-action-buttons
+{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn
+{
+    max-width: 170px;
+}

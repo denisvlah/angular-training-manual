@@ -7,22 +7,48 @@
             <strong>{{profile.firstName}} {{profile.lastName}}</strong>
             <span class="subtitle">{{profile.username}}</span>
         </div>
-        
-    </div>  
+
+    </div>
     <div class="profile-description">
         {{ profile.description}}
     </div>
     <div class="profile-card-tags">
-        @for (item of profile.stack; track $index) {
-            <div class="skill-tag">{{item}}</div>
+        @for (item of profile.stack; track item) {
+            <div [ngClass]="{
+                'skill-tag': true,
+                'search-stack-item': isSearchStackItem(item)
+            }">
+                {{item}}
+            </div>
         }
     </div>
     <div class="profile-action-buttons">
-        <button class="btn">Subscribe</button>
+        @if (!alreadySubscribed())
+        {
 
+            <button class="btn btn-shadow" (click)="subscribe()">Subscribe</button>
+        }
+        @else
+        {
+            <button class="btn btn-shadow">Send message</button>
+            <button mat-icon-button 
+                    matTooltip="unsubscribe from this person"
+                    (click)="unsubscribe()">
+                <mat-icon>unsubscribe
+                </mat-icon>                
+            </button>
+            <button mat-icon-button matTooltip="view profile">
+                <mat-icon>
+                    open_in_new
+                </mat-icon>
+            </button>
+            
+            
+        }
+        
     </div>
 </div>
 }
 @else {
-    <div> Unreachable code in the template</div>
+<div> Unreachable code in the template</div>
 }
