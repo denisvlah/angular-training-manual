@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Profile } from './profile.service';
 import { AccountService } from './rest';
 
@@ -12,6 +12,12 @@ export type ProfilesDict = {
   providedIn: 'root'
 })
 export class SubscriptionsService {
+  getMySubscribers(): Observable<Profile[]> {
+    return this.accountService.getSubscribersAccountSubscribersGet()
+    .pipe(
+      map(p => p.items as Profile[])
+    );
+  }
 
   private accountService = inject(AccountService);
 

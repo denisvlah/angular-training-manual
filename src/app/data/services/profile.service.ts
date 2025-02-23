@@ -7,6 +7,10 @@ import { AccountService, BASE_PATH, UserUpdateSchema } from './rest';
   providedIn: 'root'
 })
 export class ProfileService {
+  getProfileById(profileId: string) : Observable<Profile> {
+    let profileIdNum = parseInt(profileId);
+    return this.accountClient.getAccountAccountAccountIdGet(profileIdNum);
+  }
 
   
   private profileSubject= new BehaviorSubject<Profile>( {id:0, username:''});

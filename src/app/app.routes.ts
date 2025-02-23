@@ -5,6 +5,7 @@ import { LayoutComponent } from './common-ui/layout/layout.component';
 import { canActivateAuthGuard } from './data/services/access.guard';
 import { ProfileEditPageComponent } from './pages/profile-edit-page/profile-edit-page.component';
 import { BlogPageComponent } from './pages/blog-page/blog-page.component';
+import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 
 export const routes: Routes = [
     {
@@ -21,6 +22,10 @@ export const routes: Routes = [
             {
                 path: ProfileEditPageComponent.PATH,
                 component: ProfileEditPageComponent
+            },
+            {
+                path: 'chats',
+                component: ChatPageComponent
             }
         ],
         canActivate: [canActivateAuthGuard]
