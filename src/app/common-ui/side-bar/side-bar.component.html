@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-    <img src="/assets/images/logo.svg" class="side-bar-logo" />    
+    <img src="/assets/images/logo.svg" class="side-bar-logo" />
     <mat-nav-list class="nav-list">
       <a mat-list-item routerLink="/" routerLinkActive="current-page">
         <mat-icon>home</mat-icon>
@@ -15,16 +15,18 @@
         <mat-icon>search</mat-icon>
         <div class="nav-link-text">Profile search</div>
       </a>
-      <a mat-list-item 
-          class="edit-my-profile" 
-          routerLink="edit-my-profile"
-          routerLinkActive="current-page"
-          >
+      <a mat-list-item class="edit-my-profile" routerLink="edit-my-profile" routerLinkActive="current-page">
         <mat-icon>
           settings
         </mat-icon>
         <div class="nav-link-text">edit my profile</div>
-      </a>      
+      </a>
     </mat-nav-list>
   </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+
 </mat-sidenav-container>
