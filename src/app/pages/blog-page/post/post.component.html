@@ -88,7 +88,7 @@
         </div>
         <form [formGroup]="form" (ngSubmit)="sendComment()">
             <div class="flex items-center gap-3 mt-6 border border-dashed border-gray-700 rounded-lg p-3">
-                <img src="{{post.author.avatarUrl | avatarFullUrl}}" class="small-avatar" />
+                <img src="{{me?.avatarUrl | avatarFullUrl}}" class="small-avatar" />
                 <input type="text" formControlName="commentText" placeholder="write your comment"
                     class="bg-transparent flex-1 outline-none" />
 

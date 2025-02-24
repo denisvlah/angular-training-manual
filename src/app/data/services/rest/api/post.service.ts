@@ -631,10 +631,10 @@ export class PostService implements PostServiceInterface {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPostsPostGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<ApplicationPostSchemasPostReadSchema>>;
-    public getPostsPostGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<ApplicationPostSchemasPostReadSchema>>>;
-    public getPostsPostGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<ApplicationPostSchemasPostReadSchema>>>;
-    public getPostsPostGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getPostsPostGet(userId?: number,observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<ApplicationPostSchemasPostReadSchema>>;
+    public getPostsPostGet(userId?: number,observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<ApplicationPostSchemasPostReadSchema>>>;
+    public getPostsPostGet(userId?: number,observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<ApplicationPostSchemasPostReadSchema>>>;
+    public getPostsPostGet(userId?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -680,6 +680,9 @@ export class PostService implements PostServiceInterface {
         }
 
         let localVarPath = `/post/`;
+        if (userId) {
+            localVarPath = `/post/?user_id=${userId}`;
+        }
         return this.httpClient.request<Array<ApplicationPostSchemasPostReadSchema>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,

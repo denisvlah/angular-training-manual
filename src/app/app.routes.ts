@@ -12,7 +12,7 @@ export const routes: Routes = [
         path: '',
         component: LayoutComponent, children: [
             {
-                path: BlogPageComponent.PATH,
+                path: '',
                 component: BlogPageComponent
             },
             {
@@ -26,6 +26,10 @@ export const routes: Routes = [
             {
                 path: 'chats',
                 component: ChatPageComponent
+            },
+            {
+                path: 'blogs/:profileId',
+                component: BlogPageComponent                
             }
         ],
         canActivate: [canActivateAuthGuard]

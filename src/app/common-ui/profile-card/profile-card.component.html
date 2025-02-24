@@ -37,7 +37,8 @@
                 <mat-icon>unsubscribe
                 </mat-icon>                
             </button>
-            <button mat-icon-button matTooltip="view profile">
+            @let blogLink = '/blogs/' +profile.id;
+            <button mat-icon-button matTooltip="view profile" [routerLink]="blogLink">
                 <mat-icon>
                     open_in_new
                 </mat-icon>

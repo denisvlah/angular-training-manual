@@ -1,12 +1,9 @@
-<div class="profile-preview-header">
-    <app-avatar-image [avatarUrl]="profile.avatarUrl">        
-    </app-avatar-image>
-    
-    <div>
-        <h4>{{profile.firstName}} {{profile.lastName}}</h4>
-        <div>{{profile.username}}</div>
-    </div>
-</div>
+<app-profile-avatar
+    [avatarUrl]="profile.avatarUrl"
+    [fullName]="profile.firstName + ' ' + profile.lastName"
+    [username]="profile.username">
+
+</app-profile-avatar>
 <hr/>
 <h4>Skills</h4>
 @if (profile.stack != null && profile.stack.length > 0)

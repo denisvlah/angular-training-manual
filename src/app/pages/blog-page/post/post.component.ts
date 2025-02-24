@@ -4,7 +4,7 @@ import { ApplicationPostSchemasPostReadSchema, CommentService, PostService } fro
 import { AvatarFullUrlPipe } from "../../../pipes/avatar-full-url.pipe";
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
-import { ProfileService } from '../../../data/services/profile.service';
+import { Profile, ProfileService } from '../../../data/services/profile.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 export class PostComponent implements OnInit {  
 
   editPostElement = viewChild<ElementRef<HTMLButtonElement>>('editPostElement')
+  me: Profile | null = null;
 
   startEditPost() {
     this.postEditMode = true;
@@ -100,6 +101,7 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     this.editPostcontrol.setValue(this.post.title);
     this.myProfileDescription = this.profileService.getMyProfile().subscribe(p => {
+      this.me = p;
       this.canEditPost = p.id === this.post.author.id;
       this.myProfileDescription?.unsubscribe();
     })

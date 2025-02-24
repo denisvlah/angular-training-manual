@@ -1,35 +1,59 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { PostComponent } from "./post/post.component";
 import { MaterialModule } from '../../material.module';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { AccountService, ApplicationPostSchemasPostReadSchema, PostService } from '../../data/services/rest';
+import { ApplicationPostSchemasPostReadSchema, PostService } from '../../data/services/rest';
 import { AsyncPipe } from '@angular/common';
 import { Profile, ProfileService } from '../../data/services/profile.service';
 import { Subscription } from 'rxjs';
 import { AvatarFullUrlPipe } from "../../pipes/avatar-full-url.pipe";
+import { AvatarImageComponent } from "../profile-edit-page/avatar-image/avatar-image.component";
+import { ProfileAvatarComponent } from "../../common-ui/profile-avatar/profile-avatar.component";
 
 @Component({
   selector: 'app-blog-page',
-  imports: [PostComponent, MaterialModule, ReactiveFormsModule, MatButtonModule, AsyncPipe, AvatarFullUrlPipe],
+  imports: [PostComponent, MaterialModule, ReactiveFormsModule, MatButtonModule, AsyncPipe, AvatarFullUrlPipe, AvatarImageComponent, ProfileAvatarComponent],
   templateUrl: './blog-page.component.html',
   styleUrl: './blog-page.component.scss'
 })
 export class BlogPageComponent implements OnInit {
+  profileIdNum() {
+    if (this.profileId) {
+      return parseInt(this.profileId);
+    }
+    return undefined;
+  }
+
+  @Input() profileId: string | null = null;
+
   profileService = inject(ProfileService);
   posts: ApplicationPostSchemasPostReadSchema[] = [];
   me: Profile | null = null;
   subscription: Subscription | null = null;
+
+  profile: Profile | null = null;
+
   ngOnInit(): void {
-    this.postService.getPostsPostGet()
-      .subscribe(p => this.posts = p);
 
     this.subscription = this.profileService.getMyProfile()
       .subscribe(p => {
         this.me = p;
+        if (!this.profileId) {
+          this.profile = p;
+        }
         this.subscription?.unsubscribe();
       });
 
+    let profileIdNum: number | undefined = undefined;
+    if (this.profileId) {
+      profileIdNum = parseInt(this.profileId);
+      this.profileService.getProfileById(this.profileId)
+      .subscribe(x=>this.profile = x);
+    } 
+
+    this.postService.getPostsPostGet(profileIdNum)
+      .subscribe(p => this.posts = p);
   }
 
   public static readonly PATH = ''
@@ -63,7 +87,7 @@ export class BlogPageComponent implements OnInit {
 
   removePost($event: number) {
     if (this.posts) {
-      this.posts = this.posts.filter(x => x.id !== $event);      
+      this.posts = this.posts.filter(x => x.id !== $event);
     }
   }
 }

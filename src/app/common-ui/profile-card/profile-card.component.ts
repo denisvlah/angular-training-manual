@@ -6,10 +6,11 @@ import { ProfilesDict, SubscriptionsService } from '../../data/services/subscrip
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
 import { MaterialModule } from '../../material.module';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-profile-card',
-  imports: [AvatarFullUrlPipe, NgClass, MaterialModule],
+  imports: [AvatarFullUrlPipe, NgClass, MaterialModule, RouterModule],
   templateUrl: './profile-card.component.html',
   styleUrl: './profile-card.component.scss'
 })
