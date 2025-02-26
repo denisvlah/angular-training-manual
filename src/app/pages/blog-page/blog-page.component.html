@@ -7,8 +7,8 @@
 
     @if (!profileId || me.id == profileIdNum())
     {
-        <button mat-icon-button [matMenuTriggerFor]="filterMenu">
-            <mat-icon>filter</mat-icon>
+        <button mat-icon-button [matMenuTriggerFor]="filterMenu" aria-label="filter">
+            <mat-icon>filter_list</mat-icon>
         </button>
         <mat-menu #filterMenu="matMenu">
             <mat-radio-group formControlName="filter" class="filter-menu">
