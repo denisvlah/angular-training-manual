@@ -38,7 +38,10 @@
                 </mat-icon>                
             </button>
             @let blogLink = '/blogs/' +profile.id;
-            <button mat-icon-button matTooltip="view profile" [routerLink]="blogLink">
+            <!-- [routerLink]="blogLink" -->
+            <button mat-icon-button matTooltip="view profile" 
+                (click)="openBlog(blogLink)"
+                >
                 <mat-icon>
                     open_in_new
                 </mat-icon>

@@ -6,7 +6,7 @@ import { ProfilesDict, SubscriptionsService } from '../../data/services/subscrip
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
 import { MaterialModule } from '../../material.module';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-profile-card',
@@ -15,10 +15,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './profile-card.component.scss'
 })
 export class ProfileCardComponent {
-  isSearchStackItem(skill: string) {    
-    let index = this.searchStack.indexOf(skill.trim());
-    return index != -1;
-  }
+  private router = inject(Router);
 
 
   @Input() profile!: Profile;
@@ -29,12 +26,29 @@ export class ProfileCardComponent {
 
   private mySubscriptions: ProfilesDict | null = null;
 
+  private searchStackCleaned: string[] | null = null;
+
+  
+
   constructor() {
     this.subscriptionsService.getMySubsriptins()
       .pipe(takeUntilDestroyed())
       .subscribe(d => {
         this.mySubscriptions = d;
       });
+  }
+
+  getSearchStackCleaned() {
+    if (this.searchStackCleaned == null) {
+      this.searchStackCleaned = this.searchStack.map((s) => s.trim().toLocaleLowerCase());
+    }
+    return this.searchStackCleaned;
+  }
+
+
+  isSearchStackItem(skill: string) {
+    let index = this.getSearchStackCleaned().indexOf(skill.trim().toLocaleLowerCase());
+    return index != -1;
   }
 
   subscribe() {
@@ -51,6 +65,13 @@ export class ProfileCardComponent {
 
   unsubscribe() {
     this.subscriptionsService.subscribe(this.profile);
+  }
+
+  openBlog(blogLink: string) {
+    setTimeout(() => {
+      this.router.navigate([blogLink]);
+    }, 500);
+
   }
 
 }

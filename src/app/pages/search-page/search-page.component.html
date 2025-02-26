@@ -9,14 +9,7 @@
             <mat-label>last name</mat-label>
             <input matInput type="text" formControlName="lastName" />
             <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
-        <!-- <mat-form-field class="search-input">
-        <mat-label>registratisage with the SQLAlchemy Database Toolkit for Python.on date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="registrationDate">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field> -->
+        </mat-form-field>      
         <mat-form-field class="search-input small-input">
             <mat-label>city</mat-label>
             <input matInput formControlName="city" type="text" />
@@ -39,12 +32,33 @@
                 (matChipInputTokenEnd)="addProfileSkill($event)" class="chip-input" />
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
+        <button mat-icon-button aria-label="filter" [matMenuTriggerFor]="filterMenu">
+            <mat-icon>filter_list</mat-icon>
+        </button>
+        <mat-menu #filterMenu="matMenu" >
+            <mat-radio-group formControlName="filter" class="filter-menu">
+                <mat-radio-button value="subscriptions">my subscriptions</mat-radio-button>
+                <mat-radio-button value="subscribers">my subscribers</mat-radio-button>
+                <mat-radio-button value="all">all</mat-radio-button>
+            </mat-radio-group>
+        </mat-menu>
     </form>
     <div class="profile-card-wrapper">
-        @for(profile of profiles; track profile.id)
+        @if (loading())
         {
-        <app-profile-card [profile]="profile" [searchStack]="$profileSkills()">
-        </app-profile-card>
+            <h4>Loading...</h4>
         }
+        @else if (!loading() && (profiles == null || profiles.length == 0))
+        {
+            <h4>No profiles found</h4>
+        }
+        @else 
+        {
+            @for(profile of profiles; track profile.id)
+            {
+            <app-profile-card [profile]="profile" [searchStack]="$profileSkills()">
+            </app-profile-card>
+            }
+        }        
     </div>
 </div>

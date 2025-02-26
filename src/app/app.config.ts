@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideRouter, RouteReuseStrategy, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { displayErrorinterceptor } from './data/services/displayError.interceptor';
 import { BASE_PATH } from './data/services/rest';
 import { environment } from '../environments/environment';
+import { CustomRouteReuseStrategy } from './customRouteStrategy';
 
 
 export const appConfig: ApplicationConfig = {
@@ -31,5 +32,6 @@ export const appConfig: ApplicationConfig = {
       provide: BASE_PATH,
       useValue: environment.API_BASE_PATH
     },
+    { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy }
   ]
 };

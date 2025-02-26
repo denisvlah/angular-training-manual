@@ -88,3 +88,10 @@
     flex-grow: 1;
     overflow-y: auto;    
 }
+
+.filter-menu
+{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
