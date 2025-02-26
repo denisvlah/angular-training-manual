@@ -10,10 +10,14 @@ import { Subscription } from 'rxjs';
 import { AvatarFullUrlPipe } from "../../pipes/avatar-full-url.pipe";
 import { AvatarImageComponent } from "../profile-edit-page/avatar-image/avatar-image.component";
 import { ProfileAvatarComponent } from "../../common-ui/profile-avatar/profile-avatar.component";
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-blog-page',
-  imports: [PostComponent, MaterialModule, ReactiveFormsModule, MatButtonModule, AsyncPipe, AvatarFullUrlPipe, AvatarImageComponent, ProfileAvatarComponent],
+  imports: [PostComponent, MaterialModule, 
+    ReactiveFormsModule, MatButtonModule, AvatarFullUrlPipe,
+     ProfileAvatarComponent, MatMenuModule, MatRadioModule],
   templateUrl: './blog-page.component.html',
   styleUrl: './blog-page.component.scss'
 })

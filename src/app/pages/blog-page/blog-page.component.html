@@ -1,49 +1,62 @@
 @if (me && profile) {
-   <app-profile-avatar
-    [avatarUrl]="profile.avatarUrl"
-    [fullName]="profile.firstName + ' ' + profile.lastName"
-    [username]="profile.username"
-   >
+<div class="profile-avatr-container">
+    <app-profile-avatar [avatarUrl]="profile.avatarUrl" [fullName]="profile.firstName + ' ' + profile.lastName"
+        [username]="profile.username">
 
-   </app-profile-avatar>
-    @if (!profileId  || me.id == profileIdNum()) 
+    </app-profile-avatar>
+
+    @if (!profileId || me.id == profileIdNum())
     {
-        <div class="make-post-input">
-            <form [formGroup]="form" (ngSubmit)="sendPost()">
-                <mat-form-field class="post-field">
-                    <mat-label>post something</mat-label>
-                    <input matInput formControlName="postText"  autofocus/>
-                    <img matIconPrefix src="{{me?.avatarUrl | avatarFullUrl}}" class="small-avatar" />
-                    
-                    @if (!postTextInvalid())
-                    {
-                        <mat-error>
-                            Min post length is 3 symbols
-                        </mat-error>                
-                    }
-                    
-                    <button mat-mini-fab matSuffix type="submit" [disabled]="!canSend()">
-                        <mat-icon>
-                            send
-                        </mat-icon>
-                    </button>
-                </mat-form-field>        
-            </form>
-        </div>        
+        <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+            <mat-icon>filter</mat-icon>
+        </button>
+        <mat-menu #filterMenu="matMenu">
+            <mat-radio-group formControlName="filter" class="filter-menu">
+                <mat-radio-button value="myPosts">my posts</mat-radio-button>
+                <mat-radio-button value="mySubscriptions">my subscriptios</mat-radio-button>
+            </mat-radio-group>
+        </mat-menu>
     }
-    
-    @if (posts && posts.length > 0) 
-    {
-        @for(post of posts; track post.id) 
-        {
-            <app-post [post]="post" (postDeleted)="removePost($event)" ></app-post>    
-        }
-    }
-    @else 
-    {
-        <span>no posts</span>
-    }
+</div>
+
+@if (!profileId || me.id == profileIdNum())
+{
+<div class="make-post-input">
+    <form [formGroup]="form" (ngSubmit)="sendPost()">
+        <mat-form-field class="post-field">
+            <mat-label>post something</mat-label>
+            <input matInput formControlName="postText" autofocus />
+            <img matIconPrefix src="{{me?.avatarUrl | avatarFullUrl}}" class="small-avatar" />
+
+            @if (!postTextInvalid())
+            {
+            <mat-error>
+                Min post length is 3 symbols
+            </mat-error>
+            }
+
+            <button mat-mini-fab matSuffix type="submit" [disabled]="!canSend()">
+                <mat-icon>
+                    send
+                </mat-icon>
+            </button>
+        </mat-form-field>
+    </form>
+</div>
+}
+
+@if (posts && posts.length > 0)
+{
+@for(post of posts; track post.id)
+{
+<app-post [post]="post" (postDeleted)="removePost($event)"></app-post>
+}
+}
+@else
+{
+<span>no posts</span>
+}
 }
 @else {
-    <span>loading...</span>
+<span>loading...</span>
 }
