@@ -25,3 +25,19 @@
         background-color: black;
     }
 }
+
+.profile-avatr-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    mat-radio-group {
+        margin-left: auto;
+        margin-right: 30px;
+    }
+}
+
+.filter-menu {
+    margin-right: 15px;
+}
+

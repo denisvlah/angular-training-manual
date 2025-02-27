@@ -1,4 +1,5 @@
-@if (me && profile) {
+@if (me && profile) 
+{
 <div class="profile-avatr-container">
     <app-profile-avatar [avatarUrl]="profile.avatarUrl" [fullName]="profile.firstName + ' ' + profile.lastName"
         [username]="profile.username">
@@ -7,15 +8,33 @@
 
     @if (!profileId || me.id == profileIdNum())
     {
-        <button mat-icon-button [matMenuTriggerFor]="filterMenu" aria-label="filter">
-            <mat-icon>filter_list</mat-icon>
-        </button>
-        <mat-menu #filterMenu="matMenu">
-            <mat-radio-group formControlName="filter" class="filter-menu">
-                <mat-radio-button value="myPosts">my posts</mat-radio-button>
-                <mat-radio-button value="mySubscriptions">my subscriptios</mat-radio-button>
-            </mat-radio-group>
-        </mat-menu>
+        <mat-radio-group 
+            class="filter-menu"
+            [formControl]="postFilter"
+            >
+            <mat-radio-button 
+                value="myPosts"
+                matTooltip="show only my posts"
+                >
+                only my posts
+            </mat-radio-button>
+            <mat-radio-button 
+                value="allPosts"            
+                matTooltip="show my posts and my subscription posts"
+            >
+                all posts
+            </mat-radio-button>
+        </mat-radio-group>
+
+    <!-- <button mat-icon-button [matMenuTriggerFor]="filterMenu" aria-label="filter">
+        <mat-icon>filter_list</mat-icon>
+    </button>
+    <mat-menu 
+        #filterMenu="matMenu" 
+        class="filter-menu"        
+        >
+        
+    </mat-menu> -->
     }
 </div>
 

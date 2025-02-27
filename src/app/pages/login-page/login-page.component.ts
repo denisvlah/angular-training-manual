@@ -3,7 +3,6 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppAuthService } from '../../data/services/auth.service';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface LoginData {
@@ -36,11 +35,7 @@ export class LoginPageComponent {
 
   isPasswordVisible = signal<boolean>(false);
 
-  constructor() {
-    let isPord = environment.production;
-    if (!isPord) {
-      this.form.setValue({ username: 'denis_vlah', password: 'CdgMjunXMX' })
-    }
+  constructor() {    
   }
 
   isFormValid(){

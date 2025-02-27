@@ -1,17 +1,16 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { PostComponent } from "./post/post.component";
 import { MaterialModule } from '../../material.module';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { ApplicationPostSchemasPostReadSchema, PostService } from '../../data/services/rest';
-import { AsyncPipe } from '@angular/common';
 import { Profile, ProfileService } from '../../data/services/profile.service';
-import { Subscription } from 'rxjs';
+import { debounceTime, map, mergeMap, Observable, Subscription, zip } from 'rxjs';
 import { AvatarFullUrlPipe } from "../../pipes/avatar-full-url.pipe";
-import { AvatarImageComponent } from "../profile-edit-page/avatar-image/avatar-image.component";
 import { ProfileAvatarComponent } from "../../common-ui/profile-avatar/profile-avatar.component";
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-blog-page',
@@ -33,20 +32,20 @@ export class BlogPageComponent implements OnInit {
 
   profileService = inject(ProfileService);
   posts: ApplicationPostSchemasPostReadSchema[] = [];
-  me: Profile | null = null;
-  subscription: Subscription | null = null;
+  me: Profile | null = null;  
 
   profile: Profile | null = null;
 
-  ngOnInit(): void {
+  postFilter = new FormControl<string>('allPosts');
 
-    this.subscription = this.profileService.getMyProfile()
+  constructor() {
+    this.profileService.getMyProfile()
+      .pipe(takeUntilDestroyed())
       .subscribe(p => {
         this.me = p;
         if (!this.profileId) {
           this.profile = p;
-        }
-        this.subscription?.unsubscribe();
+        }        
       });
 
     let profileIdNum: number | undefined = undefined;
@@ -54,10 +53,36 @@ export class BlogPageComponent implements OnInit {
       profileIdNum = parseInt(this.profileId);
       this.profileService.getProfileById(this.profileId)
       .subscribe(x=>this.profile = x);
-    } 
+    }
 
-    this.postService.getPostsPostGet(profileIdNum)
-      .subscribe(p => this.posts = p);
+    this.loadPosts();
+
+    this.postFilter.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe(x => {
+        this.loadPosts();
+      });    
+  }
+
+  loadPosts() {
+    let myPosts$ = this.postService.getPostsPostGet(this.profileIdNum());
+    if (this.postFilter.value === 'allPosts') {
+      let mySubscriptionPosts$ = this.postService.getMySubscriptionsPostPostMySubscriptionsGet();
+      myPosts$ = zip(myPosts$, mySubscriptionPosts$)
+                .pipe(
+                  map(([myPosts, mySubscriptionPosts]) => {
+                    return [...myPosts, ...mySubscriptionPosts];
+                  
+                }));
+      
+    }
+
+    myPosts$.subscribe(p => this.posts = p.sort((a, b) => (a.updatedAt ?? a.createdAt) < (b.updatedAt ?? b.createdAt) ? 1 : -1));
+  }
+
+  ngOnInit(): void {    
+
+    
   }
 
   public static readonly PATH = ''
