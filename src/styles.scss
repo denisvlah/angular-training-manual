@@ -19,6 +19,9 @@ html {
     background: var(--dark-color);
     color: var(--light-color);
     background-image: url(/assets/images/background-image.png);
+    background-size: cover;
+    background-attachment: fixed;
+
 }
 
 h1 {
@@ -101,12 +104,29 @@ h1 {
 
 html,
 body {
-    height: 100%;
+    height: 100%;    
 }
 
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+//The next block is needed to make the background transparent and allow user 
+//to see the background image
+::ng-deep .mat-app-background {
+    background-color: transparent !important;
+}
+
+.mat-card, .mat-toolbar, .mat-drawer, .mat-drawer-container, .mat-tab-group,
+.mat-form-field, .mat-select, .mat-button, .mat-dialog-container {
+  background-color: transparent !important; 
+}
+
+/* For dialog backgrounds and such */
+.mat-dialog-container, .cdk-overlay-pane {
+  background-color: rgba(0, 0, 0, 0.5) !important; /* semi-transparent */
 }
 
 .error-snackbar * {

@@ -1,7 +1,9 @@
 @if (me && profile) 
 {
 <div class="profile-avatr-container">
-    <app-profile-avatar [avatarUrl]="profile.avatarUrl" [fullName]="profile.firstName + ' ' + profile.lastName"
+    <app-profile-avatar 
+        [avatarUrl]="profile.avatarUrl" 
+        [fullName]="profile.firstName + ' ' + profile.lastName"
         [username]="profile.username">
 
     </app-profile-avatar>

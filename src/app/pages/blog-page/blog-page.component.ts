@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { PostComponent } from "./post/post.component";
 import { MaterialModule } from '../../material.module';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -20,7 +20,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './blog-page.component.html',
   styleUrl: './blog-page.component.scss'
 })
-export class BlogPageComponent implements OnInit {
+export class BlogPageComponent implements OnInit, OnDestroy {
+  subscription: Subscription | null = null;
   profileIdNum() {
     if (this.profileId) {
       return parseInt(this.profileId);
@@ -39,34 +40,40 @@ export class BlogPageComponent implements OnInit {
   postFilter = new FormControl<string>('allPosts');
 
   constructor() {
-    this.profileService.getMyProfile()
-      .pipe(takeUntilDestroyed())
+        
+  }
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
+  ngOnInit(): void { 
+    this.subscription = this.profileService.getMyProfile()
+      //.pipe(takeUntilDestroyed())
       .subscribe(p => {
         this.me = p;
         if (!this.profileId) {
           this.profile = p;
-        }        
-      });
-
-    let profileIdNum: number | undefined = undefined;
-    if (this.profileId) {
-      profileIdNum = parseInt(this.profileId);
-      this.profileService.getProfileById(this.profileId)
-      .subscribe(x=>this.profile = x);
-    }
-
-    this.loadPosts();
+        }
+        this.loadPosts();        
+      });    
 
     this.postFilter.valueChanges
       .pipe(debounceTime(500))
       .subscribe(x => {
         this.loadPosts();
-      });    
+      });
+         
+    if (this.profileId) {      
+      this.profileService.getProfileById(this.profileId)
+      .subscribe(x=>this.profile = x);
+    }    
   }
+  
 
   loadPosts() {
+
     let myPosts$ = this.postService.getPostsPostGet(this.profileIdNum());
-    if (this.postFilter.value === 'allPosts') {
+    if (this.postFilter.value === 'allPosts' && !this.profileId) {
       let mySubscriptionPosts$ = this.postService.getMySubscriptionsPostPostMySubscriptionsGet();
       myPosts$ = zip(myPosts$, mySubscriptionPosts$)
                 .pipe(
@@ -80,10 +87,7 @@ export class BlogPageComponent implements OnInit {
     myPosts$.subscribe(p => this.posts = p.sort((a, b) => (a.updatedAt ?? a.createdAt) < (b.updatedAt ?? b.createdAt) ? 1 : -1));
   }
 
-  ngOnInit(): void {    
-
-    
-  }
+  
 
   public static readonly PATH = ''
 
