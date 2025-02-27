@@ -9,24 +9,22 @@
 #profile-edit-container {
     padding-top: 20px;
     padding-left: 30px;
+    padding-right: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
 }
 
-.profile-full-name mat-form-field {
-    width: 45%;
-    padding-right: 20px;
+
+.profile-full-name {   
+    display: flex;
+    gap: 30px;
+    mat-form-field {
+        flex-grow: 1;
+    }
 }
 
-.profile-username {
-    width: calc(90% + 20px);
-}
-
-.profile-description {
-    width: calc(90% + 20px);
-}
-
-.profile-stack {
-    width: calc(90% + 20px);
-}
 
 :host ::ng-deep .profile-input {
     .mat-mdc-text-field-wrapper {
@@ -49,5 +47,5 @@
 .btn {
     width: 20%;
     margin-left: auto;
-    margin-right: 50px;
+    //margin-right: 50px;
 }

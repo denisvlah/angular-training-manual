@@ -1,5 +1,5 @@
-<div id="profile-edit-container">
-    <form [formGroup]="form" (ngSubmit)="submit()">
+<div >
+    <form [formGroup]="form" (ngSubmit)="submit()" id="profile-edit-container">
         <div class="profile-full-name">
             <mat-form-field class="profile-input">
                 <mat-label>First name</mat-label>
@@ -21,7 +21,7 @@
 
         <mat-form-field class="profile-username profile-input">
             <mat-label>Telegram username</mat-label>
-            <input matInput [value]="profile.username" readonly="true" />            
+            <input matInput [value]="profile.username" readonly="true" />
         </mat-form-field>
 
         <mat-form-field class="profile-description profile-input">
@@ -44,12 +44,10 @@
             <input placeholder="Enter skill tags here..." [matChipInputFor]="reactiveChipGrid"
                 (matChipInputTokenEnd)="addProfileSkill($event)" />
         </mat-form-field>
-        <div>
-            <app-upload-avatar 
-                (fileSelected)="setFile($event)"                
-                [originalAvatar]="profile.avatarUrl">                
-            </app-upload-avatar>
-        </div>
+
+        <app-upload-avatar (fileSelected)="setFile($event)" [originalAvatar]="profile.avatarUrl">
+        </app-upload-avatar>
+
         <div class="profile-buttons">
             <button mat-icon-button matTooltip="logout" aria-label="logout" (click)="logout()">
                 <mat-icon>logout</mat-icon>

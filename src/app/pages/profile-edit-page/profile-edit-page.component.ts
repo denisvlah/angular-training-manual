@@ -1,6 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ProfilePreviewComponent } from "./profile-preview/profile-preview.component";
-import { AccountService } from '../../data/services/rest';
 import { Profile, ProfileService, ProfileUpdateData } from '../../data/services/profile.service';
 import { ProfileEditComponent } from "./profile-edit/profile-edit.component";
 import { MatGridListModule } from '@angular/material/grid-list';
