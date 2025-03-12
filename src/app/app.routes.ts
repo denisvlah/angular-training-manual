@@ -6,6 +6,7 @@ import { canActivateAuthGuard } from './data/services/access.guard';
 import { ProfileEditPageComponent } from './pages/profile-edit-page/profile-edit-page.component';
 import { BlogPageComponent } from './pages/blog-page/blog-page.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
+import { AboutPageComponent } from './pages/about-page/about-page.component';
 
 export const routes: Routes = [
     {
@@ -37,5 +38,9 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginPageComponent
+    },
+    {
+        path: 'about',
+        component: AboutPageComponent
     }
 ];
