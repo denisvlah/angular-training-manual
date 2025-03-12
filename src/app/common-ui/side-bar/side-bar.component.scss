@@ -17,10 +17,17 @@ mat-sidenav.sidenav {
   bottom: 5px;
 }
 
+.logo-container
+{
+
+  display: flex;
+  justify-content: center;
+}
+
 .side-bar-logo {
   padding-top: 20px;
-  width: 100%;
-  height: 100px;
+  width: 100px;
+  height: 100px;  
 }
 
 .edit-my-profile {
